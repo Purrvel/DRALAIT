@@ -336,6 +336,12 @@
     color:var(--muted); background:rgba(255,255,255,.02);
   }
   .chip.gen{border-color:rgba(201,168,106,.35); color:var(--gold);}
+  /* счётчик символов/токенов под полем ввода — две маленькие ненавязчивые рамочки */
+  .field-token-counter{display:flex; gap:6px; margin:4px 0 10px; flex-wrap:wrap;}
+  .ftc-chip{
+    font-size:10.5px; padding:2px 8px; border-radius:20px; border:1px solid var(--card-line);
+    color:var(--muted-2); background:rgba(255,255,255,.02); letter-spacing:.01em;
+  }
   .bubble{
     font-size:12px; line-height:1.5; padding:9px 12px; border-radius:12px; max-width:88%;
     background:rgba(255,255,255,.04); color:#ded4d0; margin-bottom:8px;
@@ -1868,6 +1874,118 @@
 
   @media (prefers-reduced-motion: reduce){
     #scr-app .af-card, #scr-app .af-board-chips .chip, #scr-app .af-img-frame.af-generated{animation:none !important; transition:none !important;}
+  }
+
+  /* МОБИЛЬНЫЙ УВЕЛИЧЕННЫЙ СИСТЕМНЫЙ ШРИФТ: личный кабинет/библиотека/карточки — не переписка с персонажем */
+  @media (max-width:700px){
+    #scr-app .side-brand{font-size:14.6px;}
+    #scr-app .side-cta b{font-size:14.6px;}
+    #scr-app .side-cta small{font-size:11.3px;}
+    #scr-app .nav-label{font-size:11.3px;}
+    #scr-app .nav-item{font-size:15.1px;}
+    #scr-app .nav-item .tail{font-size:11.8px;}
+    #scr-app .side-mini{font-size:14.1px;}
+    #scr-app .user-row .un{font-size:14.1px;}
+    #scr-app .user-row .us{font-size:11.8px;}
+    #scr-app .tb-sub{font-size:12.8px;}
+    #scr-app .search input{font-size:14.6px;}
+    #scr-app .btn{font-size:14.6px;}
+    #scr-app .btn-sm{font-size:13.6px;}
+    #scr-app .vhead p{font-size:15.1px;}
+    #scr-app .sec-head .note{font-size:13.6px;}
+    #scr-app .ent-name{font-size:16.1px;}
+    #scr-app .ent-kind{font-size:11.8px;}
+    #scr-app .ent-desc{font-size:14.1px;}
+    #scr-app .tag{font-size:11.8px;}
+    #scr-app .ent-foot{font-size:12.8px;}
+    #scr-app .lib-search-row input{font-size:15.1px;}
+    #scr-app .lib-scope-btn{font-size:14.1px;}
+    #scr-app .lib-scope-menu button{font-size:14.1px;}
+    #scr-app .lib-desc-btn{font-size:13.6px;}
+    #scr-app .edited-badge{font-size:10.3px;}
+    #scr-app .detail-kind{font-size:12.3px;}
+    #scr-app .detail-plot{font-size:15.1px;}
+    #scr-app .secret-btn{font-size:13.6px;}
+    #scr-app .full-info-head b{font-size:12.8px;}
+    #scr-app .translate-btn{font-size:12.3px;}
+    #scr-app .full-info p{font-size:14.6px;}
+    #scr-app .full-info .lang-tag{font-size:10.8px;}
+    #scr-app .cover-picker{font-size:14.6px;}
+    #scr-app .cover-picker .cc-photo-remove{font-size:12.3px;}
+    #scr-app .cc-photo-box{font-size:12.3px;}
+    #scr-app .cc-photo-box .cc-photo-remove{font-size:11.3px;}
+    #scr-app .cc-photo .cc-photo-remove{font-size:11.3px;}
+    #scr-app .cc-name-block label{font-size:13.6px;}
+    #scr-app .cc-mode button{font-size:14.1px;}
+    #scr-app .cc-conflict-msg{font-size:13.6px;}
+    #scr-app .cc-publish-note{font-size:13.6px;}
+    #scr-app .cl-entry-main b{font-size:15.1px;}
+    #scr-app .env-main b{font-size:15.1px;}
+    #scr-app .env-main span{font-size:13.6px;}
+    #scr-app .le-pos-menu button b{font-size:14.1px;}
+    #scr-app .le-pos-menu button small{font-size:12.3px;}
+    #scr-app .cc-block-simple label{font-size:14.1px;}
+    #scr-app .cc-block-simple textarea{font-size:15.1px;}
+    #scr-app .cc-acc-head small{font-size:12.8px;}
+    #scr-app .cc-field-head label, #scr-app .cc-field-label{font-size:14.1px;}
+    #scr-app .cc-hk-btn{font-size:11.3px;}
+    #scr-app .cc-field textarea, #scr-app .cc-field input, #scr-app .cc-field select{font-size:14.6px;}
+    #scr-app .pp-pick-card b{font-size:13.6px;}
+    #scr-app .pp-pick-card small{font-size:11.3px;}
+    #scr-app .pp-linked-chip{font-size:13.6px;}
+    #scr-app .pp-linked-chip .pp-chip-photo{font-size:12.3px;}
+    #scr-app .cc-plain label{font-size:14.1px;}
+    #scr-app .cc-plain textarea{font-size:15.1px;}
+    #scr-app .cc-note{font-size:13.6px;}
+    #scr-app .cc-edu-body{font-size:15.1px;}
+    #scr-app .add-card b{font-size:15.1px;}
+    #scr-app .add-card small{font-size:12.8px;}
+    #scr-app .seg button{font-size:14.1px;}
+    #scr-app .chip{font-size:12.8px;}
+    #scr-app .empty p{font-size:14.6px;}
+    #scr-app .quick button{font-size:14.1px;}
+    #scr-app .chat-meta b{font-size:15.1px;}
+    #scr-app .chat-meta span{font-size:13.6px;}
+    #scr-app .chat-when{font-size:12.3px;}
+    #scr-app .cb-head b{font-size:15.1px;}
+    #scr-app .model-pick{font-size:13.6px;}
+    #scr-app .key-state{font-size:12.8px;}
+    #scr-app .msg .bub{font-size:14.6px;}
+    #scr-app .msg .who{font-size:13.6px;}
+    #scr-app .composer textarea{font-size:15.1px;}
+    #scr-app .idea textarea{font-size:15.6px;}
+    #scr-app .idea .lbl{font-size:12.8px;}
+    #scr-app .live-head b{font-size:14.6px;}
+    #scr-app .scene-line{font-size:16.1px;}
+    #scr-app .scene-line b{font-size:13.6px;}
+    #scr-app .sheet-title{font-size:12.3px;}
+    #scr-app .frow{font-size:14.6px;}
+    #scr-app .frow .fk{font-size:13.6px;}
+    #scr-app .frow.filled .fv::after{font-size:10.8px;}
+    #scr-app .step b{font-size:15.1px;}
+    #scr-app .step p{font-size:14.1px;}
+    #scr-app .skel .cap{font-size:12.8px;}
+    #scr-app .modal .sub{font-size:14.1px;}
+    #scr-app .vc .name{font-size:15.6px;}
+    #scr-app .vc .sample{font-size:15.6px;}
+    #scr-app .vc .who{font-size:12.3px;}
+    #scr-app .form-row label{font-size:13.6px;}
+    #scr-app .form-row input, #scr-app .form-row select, #scr-app .form-row textarea{font-size:15.1px;}
+    #scr-app .af-cap{font-size:13.6px;}
+    #scr-app .af-badge{font-size:10.8px;}
+    #scr-app .af-hint{font-size:12.8px;}
+    #scr-app .af-diary-state b{font-size:14.1px;}
+    #scr-app .af-diary-state span{font-size:12.8px;}
+    #scr-app .af-diary-preview{font-size:13.6px;}
+    #scr-app .af-diary-lock{font-size:11.3px;}
+    #scr-app .af-translate-box p{font-size:14.6px;}
+    #scr-app .af-lang-btn{font-size:12.3px;}
+    #scr-app .af-rp-input{font-size:15.1px;}
+    #scr-app .af-cc-row{font-size:14.6px;}
+    #scr-app .af-cc-key{font-size:13.6px;}
+    #scr-app .af-assist-tabs button{font-size:12.8px;}
+    #scr-app .af-slider-label{font-size:13.6px;}
+    #scr-app .af-slider-off{font-size:12.8px;}
   }
 </style>
 <style>#gsStartBtn:disabled{opacity:.45; cursor:not-allowed; filter:grayscale(.5);}</style>
@@ -3818,6 +3936,8 @@
       <button data-actx="lore" type="button">Лорбук</button>
       <button data-actx="presets" type="button">Пресет</button>
       <button data-actx="regex" type="button">Regex</button>
+      <button data-actx="imgprompt" type="button">Промпт-фото</button>
+      <button data-actx="genpreset" type="button">Настройки модели</button>
       <button data-actx="chat" type="button">Чат</button>
     </div>
     <div id="assistContextList" style="display:flex; flex-direction:column; gap:8px; max-height:340px; overflow-y:auto;"></div>
@@ -4798,6 +4918,7 @@
 
   /* ========= СИНХРОНИЗАЦИЯ С SUPABASE: своя библиотека + общая ========= */
   function dbReady(){ return !!(window.DRALAIT.sb && window.DRALAIT.auth && window.DRALAIT.auth.session); }
+  window.DRALAIT.dbReady = dbReady;
 
   /* загружается один раз сразу после входа — своё и опубликованное разом
      (RLS в самой базе уже гарантирует: чужого приватного тут просто не будет) */
@@ -4918,15 +5039,18 @@
         }
         else if(row.kind === 'fav_chat' && it.chatId){ FAV_CHATS[it.chatId] = row.id; }
         else if(row.kind === 'assist_voice'){ assistVoiceRowId = row.id; assistVoiceId = it.voiceId || 'system'; }
+        else if(row.kind === 'assist_session'){ assistHistory.push(it); }
       });
       if(!API_KEYS.some(function(k){ return k.id === activeKeyId; })){
         var def = API_KEYS.find(function(k){ return k.isDefault; });
         activeKeyId = def ? def.id : (API_KEYS.length ? API_KEYS[0].id : null);
       }
       refreshKeyDot(); refreshModelPick();
+      assistHistory.sort(function(a, b){ return (b.__createdAt || 0) - (a.__createdAt || 0); });
       if(typeof renderChatList === 'function') renderChatList();
       if(typeof renderHomeChatList === 'function') renderHomeChatList();
       if(typeof syncAssistVoiceUI === 'function') syncAssistVoiceUI();
+      if(typeof renderHistory === 'function') renderHistory();
     });
   };
   /* переключатель «в избранное» для чата — доступен из любого места сайта */
@@ -6050,6 +6174,22 @@
     var ttl = titleFor(view);
     document.getElementById('tbTitle').textContent = ttl[0];
     document.getElementById('tbSub').textContent = ttl[1] || voice.tbSub;
+
+    /* в редакторе персонажа/лорбука/персоны верхняя кнопка справа не «Создать персонажа»,
+       а «Сохранить …» — дублирует кнопку сохранения внизу формы, чтобы не листать вниз */
+    var topBtn = document.getElementById('createCharTopbarBtn');
+    var editorSaveMap = { createchar:'ccSaveBtn', createlore:'clSaveBtn', createperson:'ppSaveBtn' };
+    if(editorSaveMap[view]){
+      var saveBtnEl = document.getElementById(editorSaveMap[view]);
+      topBtn.textContent = saveBtnEl ? saveBtnEl.textContent : 'Сохранить';
+      topBtn.removeAttribute('data-create');
+      topBtn.onclick = function(e){ e.preventDefault(); e.stopPropagation(); var b = document.getElementById(editorSaveMap[view]); if(b) b.click(); };
+    } else {
+      topBtn.textContent = voice.createCharBtn || 'Создать персонажа';
+      topBtn.setAttribute('data-create', 'chars');
+      topBtn.onclick = null;
+    }
+
     window.scrollTo(0, 0);
     closeSide();
     closeModal();
@@ -8328,6 +8468,9 @@
       rec.lang = 'ru-RU';
       rec.interimResults = true;
       rec.maxAlternatives = 1;
+      /* continuous:true — запись не обрывается сама по себе после паузы в речи;
+         начинается и заканчивается только по тычку пользователя в кнопку, как в самом чате */
+      rec.continuous = true;
       baseText = textarea.value;
       rec.onstart = function(){ listening = true; btn.classList.add('voice-listening'); showCaption(); };
       rec.onerror = function(){ stopUI(); };
@@ -8416,12 +8559,16 @@
     var label = ASSIST_CODE_LABELS[lang] || (lang ? lang.toUpperCase() : 'Код');
     var canPreview = (lang === 'html' || lang === 'dralait-html' || lang === 'dralait-plashka');
     var canImage = (lang === 'text' || lang === 'txt');
+    var canAddPreset = (lang === 'dralait-prompt' || lang === 'dralait-plashka' || lang === 'dralait-html');
+    var canAddRegex = (lang === 'dralait-regex' || lang === 'regex');
     return '<div class="assist-code" style="margin:8px 0; border:1px solid rgba(255,255,255,.12); border-radius:10px; overflow:hidden; background:rgba(0,0,0,.25);">' +
       '<div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 10px; background:rgba(255,255,255,.05); font-size:11.5px; letter-spacing:.03em; text-transform:uppercase; color:var(--muted);">' +
         '<span>' + escA(label) + '</span>' +
-        '<span style="display:flex; gap:6px;">' +
+        '<span style="display:flex; gap:6px; flex-wrap:wrap;">' +
           (canPreview ? '<button type="button" class="btn btn-sm" data-acbpreview="' + id + '" style="padding:3px 9px; font-size:11px;">Показать</button>' : '') +
           (canImage ? '<button type="button" class="btn btn-sm" data-acbimg="' + id + '" style="padding:3px 9px; font-size:11px;">🖼 Создать изображение</button>' : '') +
+          (canAddPreset ? '<button type="button" class="btn btn-sm" data-acbaddpreset="' + id + '" style="padding:3px 9px; font-size:11px;">📌 В пресет</button>' : '') +
+          (canAddRegex ? '<button type="button" class="btn btn-sm" data-acbaddregex="' + id + '" style="padding:3px 9px; font-size:11px;">📌 В Regex</button>' : '') +
           '<button type="button" class="btn btn-sm" data-acbcopy="' + id + '" style="padding:3px 9px; font-size:11px;">Скопировать</button>' +
         '</span>' +
       '</div>' +
@@ -8532,6 +8679,65 @@
       });
       return;
     }
+    /* «Добавить в пресет» — прямо из ответа помощника, без похода в личный кабинет: код/промпт
+       ложится новым дополнительным промптом в выбранный пресет */
+    var addPresetBtn = e.target.closest && e.target.closest('[data-acbaddpreset]');
+    if(addPresetBtn){
+      var apId = addPresetBtn.getAttribute('data-acbaddpreset');
+      var apCode = (assistCodeBlocks[apId] || '').trim();
+      if(!apCode) return;
+      var presets = (window.DRALAIT.MINE && window.DRALAIT.MINE.presets) || [];
+      if(!presets.length){
+        modal('Добавить в пресет', '<p class="ch-hint" style="margin-top:0;">Пресетов пока нет — сначала создайте хотя бы один в личном кабинете.</p>', '<button class="ch-btn" data-chclose>Закрыть</button>');
+        return;
+      }
+      var abody = presets.slice().reverse().map(function(p, i){
+        return '<button type="button" class="ch-opt" data-acbtarget="' + i + '" style="text-align:left;"><b>' + escA(p.n || 'Без названия') + '</b></button>';
+      }).join('');
+      var alist = presets.slice().reverse();
+      var am = modal('В какой пресет добавить?', abody, '<button class="ch-btn" data-chclose>Отмена</button>');
+      am.querySelectorAll('[data-acbtarget]').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var preset = alist[+btn.getAttribute('data-acbtarget')];
+          if(!preset) return;
+          preset.extras = preset.extras || [];
+          preset.extras.push({id: uid(), name: 'Из ИИ-помощника, ' + new Date().toLocaleDateString('ru-RU'), text: apCode, on: true});
+          if(window.DRALAIT.dbSaveLibraryItem) window.DRALAIT.dbSaveLibraryItem('presets', preset);
+          closeModal();
+          say('Добавила новым промптом в пресет «' + preset.n + '».');
+        });
+      });
+      return;
+    }
+    /* «Добавить в Regex» — то же самое, но в выбранную группу правил */
+    var addRegexBtn = e.target.closest && e.target.closest('[data-acbaddregex]');
+    if(addRegexBtn){
+      var arId = addRegexBtn.getAttribute('data-acbaddregex');
+      var arCode = (assistCodeBlocks[arId] || '').trim();
+      if(!arCode) return;
+      var groups = (window.DRALAIT.REGEX_GROUPS || []);
+      if(!groups.length){
+        modal('Добавить в Regex', '<p class="ch-hint" style="margin-top:0;">Групп Regex пока нет — сначала создайте хотя бы одну в настройках Regex.</p>', '<button class="ch-btn" data-chclose>Закрыть</button>');
+        return;
+      }
+      var rbody = groups.slice().reverse().map(function(g, i){
+        return '<button type="button" class="ch-opt" data-acbtarget="' + i + '" style="text-align:left;"><b>' + escA(g.label || 'Без названия') + '</b></button>';
+      }).join('');
+      var rlist = groups.slice().reverse();
+      var rm = modal('В какую группу Regex добавить?', rbody, '<button class="ch-btn" data-chclose>Отмена</button>');
+      rm.querySelectorAll('[data-acbtarget]').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var group = rlist[+btn.getAttribute('data-acbtarget')];
+          if(!group) return;
+          group.rules = group.rules || [];
+          group.rules.push({id: uid(), name: 'Из ИИ-помощника, ' + new Date().toLocaleDateString('ru-RU'), pattern: arCode, replace: ''});
+          if(window.DRALAIT.dbSaveAsset) window.DRALAIT.dbSaveAsset('regex_group', group);
+          closeModal();
+          say('Добавила правилом в группу «' + group.label + '» — поле «заменить на» оставила пустым, доуточните в настройках Regex.');
+        });
+      });
+      return;
+    }
   });
   function rebuildAssistMsgsFromDOM(){
     assistMsgs = [];
@@ -8565,6 +8771,26 @@
         });
         if(!(rg.rules || []).length) rlines.push('(в группе пока нет ни одного правила)');
         blocks.push(rlines.join('\n'));
+        return;
+      }
+      if(c.type === 'genpreset'){
+        var gp = (window.DRALAIT.GEN_PRESETS || []).find(function(x){ return x.id === c.name; });
+        if(!gp) return;
+        var gplines = ['Прикреплённый набор настроек модели «' + (gp.label || 'Без названия') + '»:'];
+        ['maxTokens','temperature','topP','topK','minP','freqPen','presPen','repPen'].forEach(function(k){
+          if(gp[k] !== '' && gp[k] != null) gplines.push('— ' + k + ': ' + gp[k]);
+        });
+        blocks.push(gplines.join('\n'));
+        return;
+      }
+      if(c.type === 'imgprompt'){
+        var ipItem = (MINE.imgprompts || []).find(function(x){ return x.n === c.name; }) ||
+                     (DATA.imgprompts || []).find(function(x){ return x.n === c.name; });
+        if(!ipItem) return;
+        var iplines = ['Прикреплённый промпт для изображения «' + (ipItem.n || 'Без названия') + '»:'];
+        if(ipItem.d) iplines.push('Описание: ' + ipItem.d);
+        if(ipItem.prompt) iplines.push('Сам промпт: ' + ipItem.prompt);
+        blocks.push(iplines.join('\n'));
         return;
       }
       var it = (MINE[c.type] || []).filter(function(x){ return x.n === c.name; })[0] ||
@@ -8629,9 +8855,12 @@
     '— Когда собираешь HTML-плашку (или что угодно другое, что удобно копировать отдельно — Regex, промпт), всегда оформляй итоговый код в тройных обратных кавычках (Markdown fenced code block) с указанием языка, например ```html ... ``` — интерфейс сайта автоматически превращает такой блок в отдельное окошко с кнопкой «Скопировать» и (для html) кнопкой живого предпросмотра. Не разбивай один и тот же кусок кода на несколько блоков без необходимости, и не пиши код прямо в тексте без тройных кавычек.',
     '— Когда пользователь просит собрать HTML-плашку напрямую в переписке (а не через горячую клавишу «Плашка под пресет + regex» — то есть без отдельного regex, просто HTML-код, который вставляется прямо в промпт пресета): у многих плашек есть своя логика — когда именно она должна появляться в игре, какие у неё поля/значения, когда и как они должны меняться, как это должно влиять на поведение персонажа (например, шкала сытости — как она снижается по ходу игры и что персонаж должен делать при низком значении; это просто пример, не единственный вариант). Пользователь не должен сам ничего из этого придумывать или дописывать — придумываешь и явно объясняешь это ты. Оформи такой ответ ОДНИМ блоком с тегом ```dralait-plashka ... ``` — внутри блока сначала короткая, но исчерпывающая инструкция для модели-рассказчика в квадратных скобках (лучше на английском — модели точнее следуют инструкциям на английском), объясняющая всю логику плашки: когда её показывать, что в ней должно быть, когда и как значения должны меняться, как это отражается на поведении персонажа. Сразу следом, в том же блоке, без разделения на два отдельных блока — сам HTML/CSS-код плашки. Если в плашке должно быть что-то динамическое (смена цветов, анимация, разное поведение в зависимости от значения) — это прописывается прямо в самом коде (HTML/CSS), а не оставляется на усмотрение пользователя: пользователь должен только скопировать готовое целиком и вставить в промпт пресета, больше от него ничего не требуется.',
     '— Про изображения — очень важно различать два разных запроса. Если пользователь просит именно ПРОМПТ для картинки (текст, который он сам куда-то вставит) — выведи готовый промпт в блоке ```text ... ``` (пользователь скопирует его сам). Но если пользователь явно просит СОЗДАТЬ, НАРИСОВАТЬ, СГЕНЕРИРОВАТЬ саму картинку (а не промпт для неё) — не выводи промпт как текст для копирования: вместо этого напиши готовый промпт для генерации в блоке ```dralait-genimage ... ``` — сайт сам, автоматически, без всяких дополнительных действий пользователя, сгенерирует по этому промпту изображение и покажет его прямо в чате. В этом случае самого текста промпта пользователю показывать не нужно — только короткую фразу вроде «Рисую» перед блоком.',
+    '— Блоки ```dralait-prompt```, ```dralait-plashka```, ```dralait-html``` и ```dralait-regex``` показываются с кнопкой «📌 В пресет» / «📌 В Regex» — по нажатию пользователь выбирает нужный пресет или группу Regex из своей библиотеки, и код добавляется туда сам, без копирования и без выхода из этого разговора. Если пользователь прямо просит «добавь это в пресет» или «добавь в Regex» — не нужно ничего делать самому за него: просто оформи код в правильном блоке и скажи, что теперь можно нажать эту кнопку и выбрать пресет/группу.',
     '— Готовые персонажей/персон/лорбуки/пресеты можно опубликовать в общую библиотеку для всех пользователей сайта; на публикацию можно пожаловаться кнопкой «Пожаловаться» — жалобы видит только хозяйка сайта в своём кабинете и может либо отклонить жалобу, либо сразу убрать публикацию из общей библиотеки.',
     '— Раздел «Глобальные правила» в кабинете хозяйки сайта позволяет ей менять системные инструкции для всего сайта (правило про карточку персонажа, про ООС-реплики в квадратных скобках, и отдельно — правила именно для тебя, ИИ-помощника) без правки кода; эти правила могут появляться и меняться уже после того, как ты был обучен на этой инструкции — учитывай их как более свежий и приоритетный источник.',
-    'Если пользователь новичок и явно потерялся или спрашивает "как тут вообще всё устроено" / "что это за кнопка" / у него что-то не работает — объясняй по-человечески и конкретно, без канцелярита, и если причина неочевидна — спрашивай, что именно он видит на экране (ошибку, пустой экран, отсутствие ответа и т.п.), прежде чем гадать.'
+    'Если пользователь новичок и явно потерялся или спрашивает "как тут вообще всё устроено" / "что это за кнопка" / у него что-то не работает — объясняй по-человечески и конкретно, без канцелярита, и если причина неочевидна — спрашивай, что именно он видит на экране (ошибку, пустой экран, отсутствие ответа и т.п.), прежде чем гадать.',
+    '— Про «Настройки модели» (набор параметров генерации — Max Tokens, Temperature, Top-P, Top-K, Min-P, Frequency/Presence Penalty, Repetition Penalty), которые пользователь может тебе прикрепить или спросить напрямую: Temperature управляет случайностью — ниже (0.2–0.5) даёт более предсказуемые, «дисциплинированные» ответы, выше (0.9–1.2) — более живые и неожиданные, но рискует уйти в бессвязность при слишком высоких значениях; для ролевых игр обычно хорошо работает диапазон 0.7–1.0. Top-P (nucleus sampling) обрезает выбор токенов по суммарной вероятности — around 0.9–0.95 почти всегда безопасное значение, снижать стоит только вместе с понижением temperature. Top-K ограничивает выбор фиксированным числом самых вероятных токенов — актуален не у всех провайдеров (Claude и GPT его обычно игнорируют или не поддерживают через этот же параметр, Gemini и локальные модели через OpenRouter — поддерживают). Min-P и Repetition/Frequency/Presence Penalty помогают бороться с «зацикливанием» модели на одних и тех же фразах — если персонаж повторяется дословно из ответа в ответ, это первое, что стоит покрутить. Max Tokens — просто потолок длины ответа, если ответы обрываются на полуслове — стоит его поднять. Если пользователь прикрепил конкретный набор настроек и спрашивает, подойдёт ли он под конкретную модель/провайдера — учитывай, что не все параметры одинаково поддерживаются всеми провайдерами (см. выше про Top-K), и говори об этом прямо, а не делай вид, что все провайдеры одинаковые.',
+    '— Про «Промпт для изображения», который пользователь может тебе прикрепить: это заготовленный текстовый промпт для генерации картинки (не сама картинка). Если он прикреплён и пользователь просит его доработать, оценить или подстроить под нового персонажа — читай его как обычный текстовый промпт для image-модели и предлагай правки тем же способом, каким обычно улучшаешь любой другой текст.'
   ].join('\n');
   function assistSystemPrompt(){
     var parts = ['Ты — ИИ-помощник, встроенный в сайт DRALAIT для текстовых ролевых игр. Ты не играешь роль персонажа и не ведёшь ролку — ' +
@@ -8776,14 +9005,18 @@
   });
 
   /* ---- привязка контекста: можно выбрать сразу несколько — персонаж, лорбук, чат и т.д. ---- */
-  var CTX_LABELS = {chars:'Персонаж', persons:'Персона', lore:'Лорбук', presets:'Пресет', regex:'Regex', chat:'Чат'};
+  var CTX_LABELS = {chars:'Персонаж', persons:'Персона', lore:'Лорбук', presets:'Пресет', regex:'Regex', chat:'Чат', imgprompt:'Промпт-фото', genpreset:'Настройки модели'};
   /* у чата за «имя» отвечает id сессии — для показа переводим его в настоящее имя персонажа;
-     у Regex за «имя» тоже отвечает id группы — переводим в её ярлык */
+     у Regex и «настроек модели» за «имя» тоже отвечает id (группы / пресета) — переводим в ярлык */
   function ctxDisplayName(c){
     if(c.type === 'chat') return (CHATS[c.name] ? CHATS[c.name].name : c.name);
     if(c.type === 'regex'){
       var rg = (window.DRALAIT.REGEX_GROUPS || []).find(function(x){ return x.id === c.name; });
       return rg ? rg.label : c.name;
+    }
+    if(c.type === 'genpreset'){
+      var gp = (window.DRALAIT.GEN_PRESETS || []).find(function(x){ return x.id === c.name; });
+      return gp ? gp.label : c.name;
     }
     return c.name;
   }
@@ -8838,7 +9071,7 @@
       return;
     }
     if(type === 'regex'){
-      var groups = window.DRALAIT.REGEX_GROUPS || [];
+      var groups = (window.DRALAIT.REGEX_GROUPS || []).slice().reverse();
       if(!groups.length){
         actxList.innerHTML = '<p class="hint-min">Групп Regex пока нет — создайте хотя бы одну в настройках Regex, и она появится здесь.</p>';
         return;
@@ -8853,7 +9086,41 @@
       }).join('');
       return;
     }
-    var items = DATA[type].concat(MINE[type]);
+    if(type === 'genpreset'){
+      var presets = (window.DRALAIT.GEN_PRESETS || []).slice().reverse();
+      if(!presets.length){
+        actxList.innerHTML = '<p class="hint-min">Наборов настроек модели пока нет — создайте хотя бы один в личном кабинете, во вкладке «Настройки модели», и он появится здесь.</p>';
+        return;
+      }
+      actxList.innerHTML = presets.map(function(g){
+        var on = ctxHas('genpreset', g.id);
+        var bits = [];
+        if(g.temperature !== '' && g.temperature != null) bits.push('t=' + g.temperature);
+        if(g.topP !== '' && g.topP != null) bits.push('top-p=' + g.topP);
+        return '<button type="button" class="vc" aria-pressed="' + (on ? 'true' : 'false') + '" data-actx-pick="' + g.id + '">' +
+          '<span class="name">' + (on ? '✓ ' : '') + escA(g.label || 'Без названия') + '</span>' +
+          '<span class="sample" style="font-style:normal; font-size:12.5px;">' + bits.join(', ') + '</span>' +
+        '</button>';
+      }).join('');
+      return;
+    }
+    if(type === 'imgprompt'){
+      var ipItems = (DATA.imgprompts || []).concat(MINE.imgprompts || []).slice().reverse();
+      if(!ipItems.length){
+        actxList.innerHTML = '<p class="hint-min">Промптов для изображений пока нет — соберите их в личном кабинете, во вкладке «Промпты для изображений».</p>';
+        return;
+      }
+      actxList.innerHTML = ipItems.map(function(it){
+        var on = ctxHas('imgprompt', it.n);
+        return '<button type="button" class="vc" aria-pressed="' + (on ? 'true' : 'false') + '" data-actx-pick="' + it.n.replace(/"/g,'&quot;') + '">' +
+          '<span class="name">' + (on ? '✓ ' : '') + it.n + '</span>' +
+          '<span class="sample" style="font-style:normal; font-size:12.5px;">' + (it.d || '') + '</span>' +
+        '</button>';
+      }).join('');
+      return;
+    }
+    /* последние добавленные/созданные — вверху списка, а не внизу */
+    var items = DATA[type].concat(MINE[type]).slice().reverse();
     actxList.innerHTML = items.map(function(it){
       var on = ctxHas(type, it.n);
       return '<button type="button" class="vc" aria-pressed="' + (on ? 'true' : 'false') + '" data-actx-pick="' + it.n.replace(/"/g,'&quot;') + '">' +
@@ -8927,15 +9194,29 @@
     var messages = cbBody.innerHTML;
     var lastBub = cbBody.querySelector('.msg:last-child .bub');
     var lastRaw = lastBub ? (lastBub.hasAttribute('data-rawreply') ? decodeURIComponent(lastBub.getAttribute('data-rawreply')) : lastBub.textContent) : '';
-    assistHistory.unshift({
+    var item = {
+      id: uid(),
       title: historyTitle(),
       preview: lastRaw.slice(0, 60),
       when: 'сегодня',
       messages: messages,
-      context: assistCtx.slice()
-    });
+      context: assistCtx.slice(),
+      __createdAt: Date.now()
+    };
+    assistHistory.unshift(item);
     renderHistory();
-    say('Сессия сохранена в историю.');
+    /* сохраняем в базу тем же способом, что и ключи/пресеты/regex — переживает выход из аккаунта.
+       Тост показываем ПОСЛЕ реального ответа базы, а не сразу — чтобы настоящая ошибка (например,
+       база отклонила запись) не терялась под преждевременным "сохранено". */
+    if(!dbReady()){
+      say('Сессия сохранена только в этой вкладке — вы не авторизованы, в базу не пишем.');
+      return;
+    }
+    var myId = window.DRALAIT.auth.session.user.id;
+    window.DRALAIT.sb.from('user_assets').upsert({id: item.id, owner_id: myId, kind: 'assist_session', data: item}).then(function(r){
+      if(r.error) say('⚠️ Не сохранилось в базу: ' + r.error.message);
+      else say('Сессия сохранена в историю.');
+    });
   });
   document.getElementById('assistHistoryBtn').addEventListener('click', function(){
     historyPanel.classList.toggle('hidden');
@@ -8944,8 +9225,11 @@
   historyList.addEventListener('click', function(e){
     var del = e.target.closest('[data-history-del]');
     if(del){
-      assistHistory.splice(+del.getAttribute('data-history-del'), 1);
+      var idx = +del.getAttribute('data-history-del');
+      var removed = assistHistory[idx];
+      assistHistory.splice(idx, 1);
       renderHistory();
+      if(removed && removed.id && typeof dbDeleteAsset === 'function') dbDeleteAsset(removed.id);
       say('Сессия удалена.');
       return;
     }
@@ -9089,7 +9373,7 @@
   }
   document.getElementById('vibeChatSend').addEventListener('click', sendVibeChatMsg);
   attachVoiceButton(document.getElementById('vibeChatVoiceBtn'), document.getElementById('vibeChatInput'));
-  function finalizeInstantStart(digest){
+  function finalizeInstantStart(digest, charFacts, personaFacts){
     /* «колёсико + Пишем начальную сцену» — прямо в этом же окне, до перехода в сам чат:
        первая реплика сцены пишется заранее и уже готовой уходит персонажу как открывающий момент */
     var composerRow = document.querySelector('#vibeChatOverlay .composer');
@@ -9110,7 +9394,12 @@
       idea: vibeOriginalIdea,
       pov: pov,
       lang: instLang,
-      vibeDigest: digest || ''
+      vibeDigest: digest || '',
+      /* факты о персонаже/персоне, которые пользователь явно назвал или подтвердил ещё до
+         старта игры — идут прямиком в карточку (полотно персонажа/персоны), а не только
+         в общую задумку сцены текстом; см. window.DRALAIT.goChat */
+      vibeCharFacts: charFacts || '',
+      vibePersonaFacts: personaFacts || ''
     };
     function go(openingText){
       closeModal();
@@ -9123,7 +9412,9 @@
     if(!key || !window.DRALAIT.callModel){ go(''); return; }
     var sys = 'Ты пишешь самую первую реплику текстовой ролевой игры «здесь и сейчас» на сайте DRALAIT. Готового персонажа ещё нет — подходящего героя (или героев), его характер, внешность и саму ситуацию нужно естественно раскрыть прямо в этой же первой реплике, оттолкнувшись от идеи и обсуждения ниже. Пиши ' + (pov === 'third' ? 'от третьего лица' : 'от первого лица, от имени персонажа') + ', на ' + (instLang === 'en' ? 'английском' : 'русском') + ' языке. Начни сцену сразу и живо, без предисловий, без мета-комментариев и без обращений к игроку вне самой сцены — только сама сцена, как готовый фрагмент истории.' +
       '\n\nИдея пользователя: ' + vibeOriginalIdea +
-      (digest ? '\n\nОбсуждённые перед стартом детали вайба/атмосферы: ' + digest : '');
+      (digest ? '\n\nОбсуждённые перед стартом детали вайба/атмосферы: ' + digest : '') +
+      (charFacts ? '\n\nУже известные факты о персонаже (учти их, не противоречь): ' + charFacts : '') +
+      (personaFacts ? '\n\nУже известные факты о персоне игрока (учти их, не противоречь): ' + personaFacts : '');
     window.DRALAIT.callModel({system: sys, messages:[{role:'user', content:'[Начни сцену.]'}]}).then(function(res){
       go(res.ok ? res.text : '');
     });
@@ -9137,12 +9428,27 @@
     var key = window.DRALAIT && window.DRALAIT.getActiveKey && window.DRALAIT.getActiveKey();
     if(!key || !window.DRALAIT.callModel){ finalizeInstantStart(''); return; }
     var transcript = vibeMsgs.map(function(m){ return (m.role === 'user' ? 'Игрок' : 'Помощник') + ': ' + m.content; }).join('\n');
-    var sys = 'Сожми первоначальную идею сцены и последующее обсуждение в компактную, но информативную выжимку для ролевого бота: вайб/атмосфера, любые упомянутые франшизы/лор/референсы, ключевые пожелания и детали, которые явно прозвучали. Пиши цельным текстом от третьего лица, по существу, без диалоговой формы, без пометок «Игрок:»/«Помощник:». Не выдумывай ничего, чего не было сказано.';
+    /* три части одним запросом: сама выжимка вайба + отдельно факты о персонаже + отдельно
+       факты о персоне игрока — то, что пользователь явно назвал или подтвердил в разговоре,
+       чтобы потом не просто упомянуть их в задумке сцены текстом, а прямо занести в карточку */
+    var sys = 'Сожми первоначальную идею сцены и последующее обсуждение в три отдельные части. Не выдумывай ничего, чего не было явно сказано игроком или явно подтверждено им в ответ на предложение помощника — если ничего подходящего не прозвучало, соответствующая часть должна остаться пустой.\n\n' +
+      'Ответь СТРОГО в этом формате, без ничего лишнего до или после:\n' +
+      '[DIGEST]\n(компактная выжимка вайба/атмосферы, упомянутых франшиз/лора/референсов и ключевых пожеланий — цельным текстом от третьего лица, без диалоговой формы)\n[/DIGEST]\n' +
+      '[CHAR_FACTS]\n(конкретные факты именно о ПЕРСОНАЖЕ, которые явно прозвучали — внешность, имя, характер, прошлое, обстоятельства и т.п.; коротко, по пунктам через точку с запятой; пусто, если ничего такого не было)\n[/CHAR_FACTS]\n' +
+      '[PERSONA_FACTS]\n(то же самое, но про ПЕРСОНУ игрока — как выглядит, кто он в этой истории; пусто, если ничего такого не было)\n[/PERSONA_FACTS]';
     var msg = 'Первоначальная идея: ' + vibeOriginalIdea + '\n\nОбсуждение:\n' + transcript;
     goBtn.disabled = true; var oldTxt = goBtn.textContent; goBtn.textContent = 'Собираю задумку…';
     window.DRALAIT.callModel({system: sys, messages:[{role:'user', content: msg}]}).then(function(res){
       goBtn.disabled = false; goBtn.textContent = oldTxt;
-      finalizeInstantStart(res.ok ? res.text.trim() : '');
+      if(!res.ok){ finalizeInstantStart(''); return; }
+      function pluck(tag){
+        var m = new RegExp('\\[' + tag + '\\]([\\s\\S]*?)\\[/' + tag + '\\]').exec(res.text);
+        return m ? m[1].trim() : '';
+      }
+      var digest = pluck('DIGEST') || res.text.trim();
+      var charFacts = pluck('CHAR_FACTS');
+      var personaFacts = pluck('PERSONA_FACTS');
+      finalizeInstantStart(digest, charFacts, personaFacts);
     });
   });
 
@@ -9306,6 +9612,19 @@
     var v = g[key];
     return (v === '' || v == null || v === 0) ? dflt : v;
   }
+  /* ---------- мобильные браузеры (особенно Safari на iOS) при сворачивании вкладки иногда
+     рвут ещё идущий запрос ("Load failed") — соединение обрывается, хотя человек ушёл всего
+     на пару секунд. Раз это чисто сетевая ошибка (не отказ модели, не проблема с ключом),
+     тихо повторяем запрос ещё пару раз с растущей паузой, прежде чем показать ошибку. ---------- */
+  function fetchWithRetry(url, fetchOpts, retriesLeft, delayMs){
+    retriesLeft = typeof retriesLeft === 'number' ? retriesLeft : 2;
+    delayMs = delayMs || 1000;
+    return fetch(url, fetchOpts).catch(function(err){
+      if(retriesLeft <= 0) throw err;
+      return new Promise(function(resolve){ setTimeout(resolve, delayMs); })
+        .then(function(){ return fetchWithRetry(url, fetchOpts, retriesLeft - 1, Math.round(delayMs * 1.6)); });
+    });
+  }
   window.DRALAIT.callModel = function(opts){
     var key = window.DRALAIT.getActiveKey();
     if(!key) return Promise.resolve({ok:false, error:'no-key'});
@@ -9335,7 +9654,62 @@
     }
 
     function finishText(txt){ return {ok:true, text: String(txt || '').trim()}; }
-    function finishErr(msg){ return {ok:false, error: msg}; }
+    function finishErr(msg, kind, trigger){ return {ok:false, error: msg, errKind: kind || 'unknown', errTrigger: trigger || null}; }
+    /* best-effort классификация ошибки — по возможности вытаскиваем ИМЕННО причину отказа
+       (категорию, на которую сработал фильтр), а не только текст "модель не ответила".
+       Разные провайдеры отдают эту информацию по-разному, где-то её просто нет — тогда
+       остаёмся при общем "похоже на цензуру/модерацию" без конкретики. */
+    var SAFETY_CATEGORY_RU = {
+      HARM_CATEGORY_SEXUALLY_EXPLICIT:'сексуальный контент', HARM_CATEGORY_HARASSMENT:'harassment/травля',
+      HARM_CATEGORY_HATE_SPEECH:'разжигание ненависти', HARM_CATEGORY_DANGEROUS_CONTENT:'опасный контент',
+      HARM_CATEGORY_CIVIC_INTEGRITY:'гражданская честность', HARM_CATEGORY_VIOLENCE:'насилие',
+      sexual:'сексуальный контент', hate:'ненависть', harassment:'harassment/травля',
+      'self-harm':'самоповреждение', violence:'насилие', 'sexual/minors':'сексуальный контент, несовершеннолетние',
+      'self-harm/intent':'намерение самоповреждения', 'self-harm/instructions':'инструкции по самоповреждению',
+      'harassment/threatening':'угрозы', 'violence/graphic':'графическое насилие'
+    };
+    function classifyHttpFallback(status){
+      if(status === 401 || status === 403) return {kind:'auth', trigger:null};
+      if(status === 429) return {kind:'rate_limit', trigger:null};
+      if(status >= 500) return {kind:'provider_down', trigger:null};
+      return {kind:'unknown', trigger:null};
+    }
+    function classifyErr(d, status, provider){
+      try{
+        if(provider === 'google'){
+          var pf = d && d.promptFeedback;
+          if(pf && pf.blockReason){
+            var cats = (pf.safetyRatings || []).filter(function(r){ return r.probability && r.probability !== 'NEGLIGIBLE'; })
+              .map(function(r){ return SAFETY_CATEGORY_RU[r.category] || r.category; });
+            return {kind:'censorship', trigger: cats.length ? cats.join(', ') : null};
+          }
+          var cand = d && (d.candidates || [])[0];
+          if(cand && cand.finishReason === 'SAFETY'){
+            var cats2 = (cand.safetyRatings || []).filter(function(r){ return r.probability && r.probability !== 'NEGLIGIBLE'; })
+              .map(function(r){ return SAFETY_CATEGORY_RU[r.category] || r.category; });
+            return {kind:'censorship', trigger: cats2.length ? cats2.join(', ') : null};
+          }
+        }
+        if(provider === 'anthropic'){
+          if(d && d.stop_reason === 'refusal') return {kind:'censorship', trigger:null};
+          var et = d && d.error && d.error.type;
+          if(et === 'authentication_error') return {kind:'auth', trigger:null};
+          if(et === 'rate_limit_error') return {kind:'rate_limit', trigger:null};
+          if(et === 'overloaded_error') return {kind:'provider_down', trigger:null};
+        }
+        var choice0 = d && (d.choices || [])[0];
+        if(choice0 && choice0.finish_reason === 'content_filter'){
+          var cf = choice0.content_filter_results || {};
+          var flagged = Object.keys(cf).filter(function(k){ return cf[k] && cf[k].filtered; })
+            .map(function(k){ return SAFETY_CATEGORY_RU[k] || k; });
+          return {kind:'censorship', trigger: flagged.length ? flagged.join(', ') : null};
+        }
+        var ecode = d && d.error && (d.error.code || d.error.type);
+        if(ecode === 'content_policy_violation') return {kind:'censorship', trigger:null};
+        if(ecode === 'invalid_api_key' || ecode === 'incorrect_api_key') return {kind:'auth', trigger:null};
+      }catch(e){}
+      return classifyHttpFallback(status);
+    }
 
     /* фото персонажа/персоны/окружения — вставляются в САМОЕ ПЕРВОЕ сообщение диалога (после
        system-промпта модель их один раз "видит" и держит в контексте на весь разговор наравне
@@ -9372,16 +9746,17 @@
         if(g.temperature !== '' && g.temperature != null) aBody.temperature = +g.temperature;
         if(g.topP !== '' && g.topP != null) aBody.top_p = +g.topP;
         if(g.topK !== '' && g.topK != null) aBody.top_k = +g.topK;
-        return fetch(base + '/messages', {
+        return fetchWithRetry(base + '/messages', {
           method:'POST',
           headers:{'Content-Type':'application/json', 'x-api-key':key.key, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true'},
           body: JSON.stringify(aBody)
         }).then(function(r){ return r.json().then(function(d){ return {r:r, d:d}; }); })
           .then(function(rd){
-            if(!rd.r.ok) return finishErr((rd.d && rd.d.error && rd.d.error.message) || ('HTTP ' + rd.r.status));
+            if(!rd.r.ok){ var c1 = classifyErr(rd.d, rd.r.status, 'anthropic'); return finishErr((rd.d && rd.d.error && rd.d.error.message) || ('HTTP ' + rd.r.status), c1.kind, c1.trigger); }
+            if(rd.d && rd.d.stop_reason === 'refusal'){ var c1b = classifyErr(rd.d, rd.r.status, 'anthropic'); return finishErr('модель отказалась отвечать', c1b.kind, c1b.trigger); }
             var txt = (rd.d.content || []).filter(function(b){ return b.type === 'text'; }).map(function(b){ return b.text; }).join('\n');
             return finishText(txt);
-          }).catch(function(e){ return finishErr(e.message || 'сеть недоступна (возможно, CORS)'); });
+          }).catch(function(e){ return finishErr(e.message || 'сеть недоступна (возможно, CORS)', 'network'); });
       }
 
       if(key.provider === 'google'){
@@ -9403,14 +9778,18 @@
         if(g.topP !== '' && g.topP != null) gBody.generationConfig.topP = +g.topP;
         if(g.topK !== '' && g.topK != null) gBody.generationConfig.topK = +g.topK;
         var url = base + '/models/' + encodeURIComponent(model) + ':generateContent?key=' + encodeURIComponent(key.key);
-        return fetch(url, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(gBody)})
+        return fetchWithRetry(url, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(gBody)})
           .then(function(r){ return r.json().then(function(d){ return {r:r, d:d}; }); })
           .then(function(rd){
-            if(!rd.r.ok) return finishErr((rd.d && rd.d.error && rd.d.error.message) || ('HTTP ' + rd.r.status));
+            if(!rd.r.ok){ var c2 = classifyErr(rd.d, rd.r.status, 'google'); return finishErr((rd.d && rd.d.error && rd.d.error.message) || ('HTTP ' + rd.r.status), c2.kind, c2.trigger); }
             var cand = (rd.d.candidates || [])[0];
+            if(!cand || cand.finishReason === 'SAFETY'){
+              var c2b = classifyErr(rd.d, rd.r.status, 'google');
+              return finishErr('модель не вернула ответ', c2b.kind, c2b.trigger);
+            }
             var txt = cand && cand.content && cand.content.parts ? cand.content.parts.map(function(p){ return p.text || ''; }).join('') : '';
             return finishText(txt);
-          }).catch(function(e){ return finishErr(e.message || 'сеть недоступна (возможно, CORS)'); });
+          }).catch(function(e){ return finishErr(e.message || 'сеть недоступна (возможно, CORS)', 'network'); });
       }
 
       /* openai / openrouter / grok / deepseek / custom — все говорят на диалекте chat/completions */
@@ -9444,14 +9823,18 @@
         if(g.repPen !== '' && g.repPen != null) oBody.repetition_penalty = +g.repPen;
       }
       var oHeaders = {'Content-Type':'application/json', 'Authorization':'Bearer ' + key.key};
-      return fetch(base + '/chat/completions', {method:'POST', headers:oHeaders, body: JSON.stringify(oBody)})
+      return fetchWithRetry(base + '/chat/completions', {method:'POST', headers:oHeaders, body: JSON.stringify(oBody)})
         .then(function(r){ return r.json().then(function(d){ return {r:r, d:d}; }); })
         .then(function(rd){
-          if(!rd.r.ok) return finishErr((rd.d && rd.d.error && rd.d.error.message) || ('HTTP ' + rd.r.status));
+          if(!rd.r.ok){ var c3 = classifyErr(rd.d, rd.r.status, 'openai'); return finishErr((rd.d && rd.d.error && rd.d.error.message) || ('HTTP ' + rd.r.status), c3.kind, c3.trigger); }
           var choice = (rd.d.choices || [])[0];
+          if(choice && choice.finish_reason === 'content_filter'){
+            var c3b = classifyErr(rd.d, rd.r.status, 'openai');
+            return finishErr('ответ заблокирован фильтром провайдера', c3b.kind, c3b.trigger);
+          }
           var txt = choice && choice.message ? choice.message.content : '';
           return finishText(txt);
-        }).catch(function(e){ return finishErr(e.message || 'сеть недоступна (возможно, CORS)'); });
+        }).catch(function(e){ return finishErr(e.message || 'сеть недоступна (возможно, CORS)', 'network'); });
     }catch(e){
       return Promise.resolve(finishErr(e.message || 'неизвестная ошибка'));
     }
@@ -9513,7 +9896,7 @@
         });
       }
       parts.push({text: prompt});
-      return fetch(url, {method:'POST', headers:{'Content-Type':'application/json'},
+      return fetchWithRetry(url, {method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({contents:[{role:'user', parts: parts}]})
       }).then(function(r){ return r.json().then(function(d){ return {r:r, d:d}; }); })
         .then(function(rd){
@@ -9541,7 +9924,7 @@
         });
       }
       chatContent.push({type:'text', text: prompt});
-      return fetch(base + '/chat/completions', {
+      return fetchWithRetry(base + '/chat/completions', {
         method:'POST',
         headers:{'Content-Type':'application/json', 'Authorization':'Bearer ' + key.key},
         body: JSON.stringify({model: imgModel, modalities:['image','text'], messages:[{role:'user', content: chatContent}]})
@@ -9566,7 +9949,7 @@
         var blob = dataUrlToBlob(im.dataUrl);
         if(blob) fd.append('image[]', blob, 'ref' + i + '.' + (im.mime.split('/')[1] || 'png'));
       });
-      return fetch(base + '/images/edits', {method:'POST', headers:{'Authorization':'Bearer ' + key.key}, body: fd})
+      return fetchWithRetry(base + '/images/edits', {method:'POST', headers:{'Authorization':'Bearer ' + key.key}, body: fd})
         .then(function(r){ return r.json().then(function(d){ return {r:r, d:d}; }); })
         .then(function(rd){
           if(!rd.r.ok) return {ok:false, error:(rd.d && rd.d.error && rd.d.error.message) || ('HTTP ' + rd.r.status)};
@@ -9583,7 +9966,7 @@
        с этой ошибкой ещё до генерации. Собираем тело запроса по провайдеру. */
     var genBody = {model: imgModel, prompt: prompt, n:1};
     if(key.provider !== 'grok') genBody.size = '1024x1024';
-    return fetch(base + '/images/generations', {
+    return fetchWithRetry(base + '/images/generations', {
       method:'POST',
       headers:{'Content-Type':'application/json', 'Authorization':'Bearer ' + key.key},
       body: JSON.stringify(genBody)
@@ -10489,6 +10872,7 @@
     genericDeleteAction = action;
     openModal('genericDeleteOverlay');
   }
+  window.DRALAIT.askDelete = askDelete;
   document.getElementById('genericDeleteConfirmBtn').addEventListener('click', function(){
     var action = genericDeleteAction;
     genericDeleteAction = null;
@@ -10965,6 +11349,7 @@
   .ch-btn-dash:hover{color:var(--gold); border-color:rgba(201,168,106,.4);}
   .ch-btn-danger{border-color:rgba(230,69,90,.35); color:#e6899a;}
   .ch-btn-danger:hover{background:rgba(230,69,90,.1);}
+  .ch-btn-sm{padding:5px 10px; font-size:11.5px;}
   #scr-chat .ch-row{display:flex; gap:7px; flex-wrap:wrap;}
 
   /* рубильник */
@@ -11453,8 +11838,8 @@
   }
   #scr-chat .ch-bottom-inner{
     width:var(--ch-flow); max-width:760px; margin:0 26px 0 auto;
-    background:rgba(10,7,8,.88); border:1px solid var(--card-line); border-radius:22px;
-    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    background:rgba(10,7,8,.6); border:1px solid var(--card-line); border-radius:22px;
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
     padding:12px 16px 14px; box-shadow:0 24px 60px -24px #000; pointer-events:auto;
   }
   #scr-chat .ch-atts{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:7px;}
@@ -11665,9 +12050,27 @@
     #scr-chat .ch-bottom{left:0; right:0; padding:0 10px calc(env(safe-area-inset-bottom, 0px) + 10px);}
     #scr-chat .ch-bottom-inner{width:100%; max-width:none; margin:0; border-radius:18px; box-sizing:border-box;}
     #scr-chat .ch-searchbox{max-width:none;}
-    #scr-chat .ch-tools{gap:5px;}
+
+    /* горячие клавиши (вложить/ООС/**/""/написать за меня/голос) — на телефоне не отдельной
+       строкой НАД полем ввода (туда неудобно тянуться большим пальцем), а справа от поля,
+       прямо над клавиатурой: колонка иконок рядом со строкой ввода, в зоне досягаемости руки. */
+    #scr-chat .ch-bottom-inner{
+      display:grid;
+      grid-template-columns:1fr auto;
+      grid-template-areas:"atts atts" "continue continue" "input tools";
+      align-items:end; column-gap:8px;
+    }
+    #scr-chat .ch-atts{grid-area:atts; margin-bottom:0;}
+    #scr-chat .ch-continue-strip{grid-area:continue; margin-bottom:0;}
+    #scr-chat .ch-inputrow{grid-area:input;}
+    #scr-chat .ch-tools{
+      grid-area:tools; margin-bottom:0; align-self:stretch;
+      flex-direction:column; flex-wrap:wrap; gap:5px;
+      max-height:64px; align-content:flex-start;
+    }
     #scr-chat .ch-tool span.lbl{display:none;}
-    #scr-chat .ch-tool{padding:0 9px;}
+    #scr-chat .ch-tool{padding:0; width:32px; height:32px; justify-content:center; flex-shrink:0;}
+    #scr-chat .ch-tool.mark{width:32px; padding:0;}
     #scr-chat .ch-inputrow textarea{min-height:64px; max-height:230px;}
     #scr-chat .ch-selectbar{
       flex-wrap:wrap; justify-content:center; white-space:normal;
@@ -11689,6 +12092,50 @@
     select{
       font-size:16px !important;
     }
+  }
+
+  /* МОБИЛЬНЫЙ УВЕЛИЧЕННЫЙ СИСТЕМНЫЙ ШРИФТ: панели «мастерская»/«пульс» и модалки экрана чата — не сами сообщения */
+  @media (max-width:700px){
+    #scr-chat .ch-acc-h{font-size:14.6px;}
+    #scr-chat .ch-acc-h .arr{font-size:12.3px;}
+    #scr-chat select, #scr-chat input[type="text"], #scr-chat input[type="number"], #scr-chat textarea{font-size:14.1px;}
+    .ch-hint{font-size:12.3px;}
+    #scr-chat .ch-warn{font-size:12.3px;}
+    .ch-btn{font-size:13.6px;}
+    #scr-chat .ch-tabs-trigger{font-size:12.3px;}
+    #scr-chat .ch-tabs button{font-size:12.8px;}
+    .ch-sheet-name .fld label{font-size:10.8px;}
+    .ch-sacc-h b{font-size:12.3px;}
+    .ch-sacc-h .cnt{font-size:11.3px;}
+    .ch-sacc-h .arr{font-size:12.3px;}
+    .ch-sf > label{font-size:12.3px;}
+    .ch-sheet-note{font-size:12.3px;}
+    .ch-modal .ch-grp-h b{font-size:12.3px;}
+    #scr-chat .ch-grp-h b{font-size:12.3px;}
+    #scr-chat .ch-meter-name{font-size:13.6px;}
+    #scr-chat .ch-arrow{font-size:10.3px;}
+    #scr-chat .ch-meter-val{font-size:12.3px;}
+    #scr-chat .ch-meter-main .ch-meter-name{font-size:14.6px;}
+    #scr-chat .ch-meter-main .ch-meter-val{font-size:14.6px;}
+    #scr-chat .ch-why{font-size:12.3px;}
+    #scr-chat .ch-opt small, .ch-modal .ch-opt small{font-size:11.8px;}
+    #scr-chat .ch-pick-chip button, .ch-modal .ch-pick-chip button{font-size:12.3px;}
+    #scr-chat .ch-fact .st{font-size:10.8px;}
+    #scr-chat .ch-fact .tx{font-size:13.6px;}
+    #scr-chat .ch-fact-acts button{font-size:11.8px;}
+    #scr-chat .ch-name{font-size:15.6px;}
+    #scr-chat .ch-variant{font-size:11.8px;}
+    #scr-chat .ch-variant button{font-size:13.6px;}
+    #scr-chat .ch-att-chip{font-size:12.3px;}
+    #scr-chat .ch-atts .chip{font-size:12.3px;}
+    #scr-chat .ch-atts .chip button{font-size:13.6px;}
+    .ch-pe-body input[type="text"], .ch-pe-body textarea{font-size:15.1px;}
+    .ch-pe-mainrow-name{font-size:15.1px;}
+    .ch-pe-bang{font-size:14.6px;}
+    .ch-pe-extra-namebtn{font-size:14.6px;}
+    .ch-pe-extra-arrow{font-size:15.6px;}
+    #scr-chat .ch-diary-entry .st{font-size:11.8px;}
+    #scr-chat .ch-color-row span{font-size:12.8px;}
   }
 </style>
 
@@ -11806,6 +12253,13 @@
           </div>
           <input type="file" id="chBgInput" accept="image/*" class="hidden">
           <p class="ch-hint" id="chBgHint">Фото можно загрузить и настроить как угодно — где встанет и что будет под сообщениями.</p>
+
+          <label class="ch-lab">Или просто цвет — без фото</label>
+          <div class="ch-row" style="align-items:center;">
+            <input type="color" id="chBgColorPicker" value="#1a1114" style="width:44px; height:34px; padding:2px; border-radius:8px; border:1px solid var(--card-line); background:transparent; cursor:pointer;">
+            <button class="ch-btn" id="chBgColorClear" type="button">Убрать цвет</button>
+          </div>
+          <p class="ch-hint">Выбор цвета уберёт фото сцены — сообщения лягут на сплошной фон в этом цвете.</p>
 
           <div class="ch-bg-preview empty" id="chBgPreview" role="slider" aria-label="Положение фото в кадре" tabindex="0">
             <span class="ch-bg-preview-hint" id="chBgPreviewHint">Здесь появится окошко предпросмотра — потяните фото, чтобы выбрать кадр</span>
@@ -12214,7 +12668,16 @@
       <span class="ch-pe-mainrow-arrow">›</span>
     </button>
 
-    <label class="ch-lab">Дополнительные промпты</label>
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:12px;">
+      <label class="ch-lab" style="margin:0;">Дополнительные промпты</label>
+      <button class="ch-btn ch-btn-sm" id="chPeExtraSelectToggle" type="button" style="flex-shrink:0;">Выбрать несколько</button>
+    </div>
+    <div id="chPeExtraBulkBar" class="hidden" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:8px 12px; margin-bottom:8px; border:1px dashed rgba(201,168,106,.4); border-radius:10px; background:rgba(201,168,106,.06); font-size:12.5px;">
+      <span>Выбрано: <b id="chPeExtraSelCount">0</b></span>
+      <button type="button" class="ch-btn ch-btn-sm" id="chPeExtraSelAll">Выбрать все</button>
+      <button type="button" class="ch-btn ch-btn-sm ch-btn-danger" id="chPeExtraSelDel">Удалить выбранные</button>
+      <button type="button" class="ch-btn ch-btn-sm" id="chPeExtraSelDone">Готово</button>
+    </div>
     <div id="chPeExtras"></div>
     <button class="ch-btn ch-btn-dash" id="chPeAddExtra" type="button" style="width:100%;">+ Добавить промпт</button>
 
@@ -12288,6 +12751,24 @@
     n.textContent = text; n.classList.add('show');
     clearTimeout(nTimer);
     nTimer = setTimeout(function(){ n.classList.remove('show'); }, 3000);
+  }
+
+  /* ---------- окно ошибки генерации: заголовок + причина, и если похоже на цензуру —
+     что именно под неё попало (категория, если провайдер её присылает). ---------- */
+  var ERROR_KIND_INFO = {
+    censorship: {title:'Ответ заблокирован фильтром', hint:'Модель или провайдер отказались отвечать — сработал фильтр контента.'},
+    auth: {title:'Проблема с API-ключом', hint:'Ключ недействителен, отключён или не подходит для этой модели. Проверьте его в настройках.'},
+    rate_limit: {title:'Лимит запросов', hint:'Провайдер временно ограничил частоту запросов на этом ключе. Обычно помогает просто подождать немного.'},
+    provider_down: {title:'Провайдер недоступен', hint:'Сервис модели сейчас перегружен или лежит на своей стороне. Обычно можно просто повторить чуть позже.'},
+    network: {title:'Проблема с сетью', hint:'Запрос не дошёл до провайдера — нет соединения или его блокирует браузер/CORS.'},
+    unknown: {title:'Не получилось получить ответ', hint:'Провайдер вернул ошибку без понятной причины.'}
+  };
+  function showModelErrorModal(res){
+    var info = ERROR_KIND_INFO[res.errKind] || ERROR_KIND_INFO.unknown;
+    var body = '<p class="ch-hint" style="margin-top:0;">' + esc(info.hint) + '</p>' +
+      (res.errTrigger ? '<p class="ch-hint"><b>Похоже, сработало на:</b> ' + esc(res.errTrigger) + '</p>' : '') +
+      (res.error ? '<p class="ch-hint" style="opacity:.75;">Сообщение провайдера: «' + esc(String(res.error).slice(0, 400)) + '»</p>' : '');
+    modal(info.title, body, '<button class="ch-btn ch-btn-solid" data-chclose>Понятно</button>');
   }
 
   /* ---------- модалка ---------- */
@@ -12443,6 +12924,7 @@
       /* набор параметров генерации (temperature, top-p и т.д.) выбирается из личного кабинета */
       genPresetId: null,
       bg: seed.photo || null, bgPos: '50% 40%', bgFit: 'side', bgWidth: 46, bgFitAuto: true, bgGradientOnly: false,
+      bgSolidColor: null,
       look: defaultLook()
     };
     st.sumMarker = {day: st.day, min: st.min};
@@ -13005,10 +13487,25 @@
       art.style.display = 'none';
       blendPhoto.classList.remove('on');
       blendPhoto.style.backgroundImage = 'none';
-      root.style.setProperty('--ch-bg1', '#1a1114');
-      root.style.setProperty('--ch-bg2', '#0a0708');
+      if(S.bgSolidColor){
+        root.style.setProperty('--ch-bg1', S.bgSolidColor);
+        root.style.setProperty('--ch-bg2', shadeColor(S.bgSolidColor, -18));
+      } else {
+        root.style.setProperty('--ch-bg1', '#1a1114');
+        root.style.setProperty('--ch-bg2', '#0a0708');
+      }
       root.classList.remove('grad-only');
     }
+  }
+  /* затемняет/осветляет hex-цвет на percent% — для второй точки градиента из своего цвета фона */
+  function shadeColor(hex, percent){
+    var h = hex.replace('#', '');
+    if(h.length === 3) h = h.split('').map(function(c){ return c + c; }).join('');
+    var num = parseInt(h, 16);
+    var r = Math.max(0, Math.min(255, (num >> 16) + Math.round(255 * (percent/100))));
+    var g = Math.max(0, Math.min(255, ((num >> 8) & 0xFF) + Math.round(255 * (percent/100))));
+    var b = Math.max(0, Math.min(255, (num & 0xFF) + Math.round(255 * (percent/100))));
+    return '#' + (0x1000000 + r*0x10000 + g*0x100 + b).toString(16).slice(1);
   }
   /* новое фото (загрузка или возврат аватарки) — заново предполагаем ширину/заход по пропорциям,
      дальше человек может переопределить это вручную переключателем и ползунком */
@@ -13016,6 +13513,7 @@
     S.bg = dataUrl || null;
     S.bgPos = '50% 40%';
     S.bgFitAuto = true;
+    if(dataUrl) S.bgSolidColor = null;
     applyArt();
   }
 
@@ -13056,6 +13554,7 @@
     $('chShowStampSw').classList.toggle('on', L.showStamp !== false);
     /* фон сцены */
     $('chBgFullSw').classList.toggle('on', S.bgFit === 'full');
+    $('chBgColorPicker').value = S.bgSolidColor || '#1a1114';
     $('chBgWidth').value = S.bgWidth;
     $('chBgWidth').disabled = (S.bgFit === 'full');
     $('chBgWidth').closest('.ch-slider').classList.toggle('off', S.bgFit === 'full');
@@ -14588,6 +15087,10 @@
     peEditing = editable;
     var src = existing || {};
     peExtras = src.extras ? JSON.parse(JSON.stringify(src.extras)).map(function(e){ e.collapsed = true; return e; }) : [];
+    peExtraSelectMode = false;
+    peExtraSelected = {};
+    if($('chPeExtraBulkBar')) $('chPeExtraBulkBar').classList.add('hidden');
+    if($('chPeExtraSelectToggle')) $('chPeExtraSelectToggle').textContent = 'Выбрать несколько';
     peMainName = src.mainPromptName || 'Главный промпт';
     peMainText = src.mainPrompt || '';
     $('chPeTitle').textContent = editable ? 'Изменить пресет' : 'Новый пресет';
@@ -14644,22 +15147,31 @@
       peExtras.forEach(function(e){ if(e.id === id) e.text = ta.value; });
     });
   }
+  var peExtraSelectMode = false;
+  var peExtraSelected = {};
   function renderPeExtras(){
+    var checkbox = function(e){
+      return peExtraSelectMode
+        ? '<label class="ch-mini-sw' + (peExtraSelected[e.id] ? ' on' : '') + '" style="flex-shrink:0;"><input type="checkbox" data-pe-extracheck="' + e.id + '" ' + (peExtraSelected[e.id] ? 'checked' : '') + ' style="position:absolute; opacity:0; width:20px; height:20px; margin:0; cursor:pointer;"></label>'
+        : '';
+    };
     $('chPeExtras').innerHTML = peExtras.length ? peExtras.map(function(e){
       if(e.collapsed){
         return '<div class="ch-pe-extra ch-pe-extra-collapsed" data-pe-extra="' + e.id + '">' +
+          checkbox(e) +
           '<button class="ch-mini-sw' + (e.on ? ' on' : '') + '" data-pe-extrasw="' + e.id + '" aria-label="Включить или выключить" title="Включить/выключить"></button>' +
           '<button type="button" class="ch-pe-extra-namebtn" data-pe-extraexpand="' + e.id + '">' +
             '<span>' + esc(e.name || 'Без названия') + '</span><span class="ch-pe-extra-arrow">›</span>' +
           '</button>' +
-          '<button class="ch-x" data-pe-extradel="' + e.id + '" aria-label="Удалить">✕</button>' +
+          (peExtraSelectMode ? '' : '<button class="ch-x" data-pe-extradel="' + e.id + '" aria-label="Удалить">✕</button>') +
         '</div>';
       }
       return '<div class="ch-pe-extra" data-pe-extra="' + e.id + '">' +
         '<div class="ch-pe-extra-top">' +
+          checkbox(e) +
           '<button class="ch-mini-sw' + (e.on ? ' on' : '') + '" data-pe-extrasw="' + e.id + '" aria-label="Включить или выключить" title="Включить/выключить"></button>' +
           '<input type="text" data-pe-extraname="' + e.id + '" value="' + esc(e.name).replace(/"/g,'&quot;') + '" placeholder="Название промпта">' +
-          '<button class="ch-x" data-pe-extradel="' + e.id + '" aria-label="Удалить">✕</button>' +
+          (peExtraSelectMode ? '' : '<button class="ch-x" data-pe-extradel="' + e.id + '" aria-label="Удалить">✕</button>') +
         '</div>' +
         (window.DRALAIT.hotkeyBtns ? '<div style="display:flex; gap:6px; flex-wrap:wrap; margin:6px 0;">' + window.DRALAIT.hotkeyBtns('peExtraText_' + e.id) +
           '<button type="button" class="cc-tr-btn" data-tr="peExtraText_' + e.id + '" data-trlang="en" title="Перевести на английский"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 4 6 4 9s-1.5 6.3-4 9c-2.5-2.7-4-6-4-9s1.5-6.3 4-9Z"/></svg>EN</button>' +
@@ -14669,6 +15181,8 @@
         '<button type="button" class="ch-btn ch-btn-solid" data-pe-extrasave="' + e.id + '" style="margin-top:9px; width:100%;">Сохранить</button>' +
       '</div>';
     }).join('') : '<p class="ch-hint" style="margin-top:0;">Пока ни одного — добавьте первый.</p>';
+    var cnt = Object.keys(peExtraSelected).filter(function(k){ return peExtraSelected[k]; }).length;
+    if($('chPeExtraSelCount')) $('chPeExtraSelCount').textContent = cnt;
   }
   function addPeExtra(){
     syncExtrasFromDOM();
@@ -15432,6 +15946,122 @@
     try{ fn(); } finally { if(switched) S = prevS; }
   }
 
+  /* ---------- фоновая генерация: ответ реально дописывается СЕРВЕРОМ (Supabase Edge Function),
+     а не вкладкой браузера. Раньше запрос к провайдеру уходил прямо из браузера и ждал ответа
+     там же — мобильные браузеры (особенно iOS Safari) обрывают такое соединение, как только
+     страница уходит в фон дольше нескольких секунд ("Load failed"). Теперь браузер только
+     просит сервер начать генерацию (это быстро, страница почти наверняка ещё на переднем плане
+     в этот момент) и создаёт запись-задачу — а сам провайдерский запрос выполняется на сервере
+     Supabase и продолжается независимо от вкладки. Когда человек возвращается — просто спрашиваем
+     "готово?" и показываем результат. Если Edge Function ещё не задеплоена или пользователь не
+     авторизован (гостевой режим) — тихо откатываемся на старый способ (прямой fetch из вкладки),
+     чтобы сайт не сломался, просто без защиты от сворачивания. ---------- */
+  var GEN_EDGE_URL = 'https://mitonlcaqlkitohqfgno.supabase.co/functions/v1/generate-reply';
+  function dbCreateGenJob(jobId, chatId){
+    if(!window.DRALAIT.dbReady()) return Promise.resolve(false);
+    var myId = window.DRALAIT.auth.session.user.id;
+    return window.DRALAIT.sb.from('gen_jobs').insert({id: jobId, owner_id: myId, chat_id: chatId, status:'pending'})
+      .then(function(r){ return !r.error; }).catch(function(){ return false; });
+  }
+  function dbFetchGenJob(jobId){
+    if(!window.DRALAIT.dbReady()) return Promise.resolve(null);
+    return window.DRALAIT.sb.from('gen_jobs').select('*').eq('id', jobId).maybeSingle()
+      .then(function(r){ return (r.error ? null : r.data); }).catch(function(){ return null; });
+  }
+  function dbDeleteGenJob(jobId){
+    if(!window.DRALAIT.dbReady()) return Promise.resolve();
+    return window.DRALAIT.sb.from('gen_jobs').delete().eq('id', jobId).then(function(){}).catch(function(){});
+  }
+  /* запускает генерацию на сервере и сразу возвращается — не ждёт готового ответа.
+     Возвращает jobId при успехе или null, если фоновый путь недоступен (тогда вызывающий
+     код сам откатится на старый прямой fetch). */
+  function startBgReplyJob(sess, payload){
+    if(!window.DRALAIT.dbReady() || !window.DRALAIT.getActiveKey) return Promise.resolve(null);
+    var key = window.DRALAIT.getActiveKey();
+    if(!key) return Promise.resolve(null);
+    var jobId = uid();
+    return dbCreateGenJob(jobId, sess.id).then(function(created){
+      if(!created) return null;
+      var token = window.DRALAIT.auth.session.access_token;
+      var body = {
+        jobId: jobId, provider: key.provider, model: key.model || (window.DRALAIT.PROVIDERS[key.provider] && window.DRALAIT.PROVIDERS[key.provider].models[0]),
+        apiKey: key.key, baseUrl: key.baseUrl,
+        system: payload.system, messages: payload.messages, gen: payload.gen,
+        images: payload.images, imagesTarget: payload.imagesTarget
+      };
+      return fetch(GEN_EDGE_URL, {
+        method:'POST', headers:{'Content-Type':'application/json', 'Authorization':'Bearer ' + token},
+        body: JSON.stringify(body)
+      }).then(function(r){ return r.ok ? jobId : null; }).catch(function(){ return null; });
+    }).catch(function(){ return null; });
+  }
+  /* опрос задачи — быстро, пока вкладка на экране (обычный случай), и сразу же при
+     возврате из фона/с другой вкладки (ради этого всё и затевалось). Пассивный опрос
+     по таймеру нарочно не бесконечный — задачи почти всегда решаются проверкой при
+     возврате, таймер лишь подстраховка для тех, кто ждёт прямо на странице. */
+  var jobPollTimers = {};
+  function pollJobLoop(sess, jobId, delay){
+    clearTimeout(jobPollTimers[jobId]);
+    if(document.visibilityState !== 'visible') return; /* дальше проверим сами при visibilitychange */
+    jobPollTimers[jobId] = setTimeout(function(){
+      if(sess.pendingJobId !== jobId) return; /* уже решилось иначе */
+      resolveCharTurnJob(sess, jobId).then(function(resolved){
+        if(!resolved) pollJobLoop(sess, jobId, Math.min((delay || 2000) * 1.4, 8000));
+      });
+    }, delay || 2000);
+  }
+  /* проверяет конкретную задачу и, если она готова, применяет результат к сессии —
+     тем же способом, каким раньше применялся результат прямого fetch. Возвращает
+     Promise<true>, если задача была решена (готова или ошибка), иначе Promise<false>. */
+  function resolveCharTurnJob(sess, jobId){
+    return dbFetchGenJob(jobId).then(function(row){
+      if(!row || row.status === 'pending') return false;
+      if(sess.pendingJobId === jobId) sess.pendingJobId = null;
+      var textForFallback = sess.pendingJobTextFallback; sess.pendingJobTextFallback = null;
+      clearTimeout(jobPollTimers[jobId]); delete jobPollTimers[jobId];
+      var res;
+      if(row.status === 'done'){
+        var parsed = extractState(row.result_text || '');
+        res = {ok:true, text: parsed.text, state: parsed.state, thinking: parsed.thinking};
+      } else {
+        res = {ok:false, error: row.err_message, errKind: row.err_kind, errTrigger: row.err_trigger};
+      }
+      applyCharTurnResult(sess, res, textForFallback);
+      dbDeleteGenJob(jobId);
+      return true;
+    });
+  }
+  /* при возврате на вкладку/в приложение — проверяем все чаты, у которых генерация
+     была запущена в фоне и ещё не подтверждена как решённая */
+  function resolveAllPendingJobs(){
+    Object.keys(SESSIONS || {}).forEach(function(sid){
+      var sess = SESSIONS[sid];
+      if(sess && sess.pendingJobId) resolveCharTurnJob(sess, sess.pendingJobId);
+    });
+  }
+  document.addEventListener('visibilitychange', function(){
+    if(document.visibilityState === 'visible') resolveAllPendingJobs();
+  });
+  window.addEventListener('focus', resolveAllPendingJobs);
+  window.addEventListener('pageshow', resolveAllPendingJobs);
+
+  /* уведомление, когда ответ пришёл, а вкладка в этот момент была в фоне — просто чтобы
+     человек знал, что можно вернуться, а не сидел и не гадал */
+  var notifyAsked = false;
+  function ensureNotifyPermission(){
+    if(notifyAsked || typeof Notification === 'undefined') return;
+    notifyAsked = true;
+    if(Notification.permission === 'default') Notification.requestPermission();
+  }
+  function notifyBgReply(name, text){
+    if(typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
+    if(!document.hidden) return;
+    try{
+      var n = new Notification(name + ' ответил(а)', {body: String(text || '').slice(0, 140), tag: 'dralait-reply', icon: (S && S.photo) || undefined});
+      n.onclick = function(){ window.focus(); n.close(); };
+    }catch(err){}
+  }
+
   /* ---------- подготовительная стадия «здесь и сейчас»: уточняем вайб с нейтральным
      помощником ДО того, как персонаж вообще узнает о разговоре — идея не реплика ему в лицо ---------- */
   var START_TRIGGER = /(^|[\s,.!—-])(начинай|начни|начинаем|поехали|погнали|запускай|го\b|можно начинать|начинайте|давай начинай|стартуем|поехали уже)([\s,.!]|$)/i;
@@ -15475,18 +16105,18 @@
     });
   }
 
-  function generateReply(userText){
-    if(!window.DRALAIT || !window.DRALAIT.callModel) return Promise.resolve({ok:false, error:'engine-unavailable'});
+  function buildGenPayload(userText){
     var system = buildSystemPrompt();
     var messages = buildMessagesForModel();
     if(!messages.length){
-      /* самый первый ход сцены: до этого была только затравка идеи (setup-сообщения намеренно
-         не входят в историю — их суть уже разложена в системном промпте через S.idea), поэтому
-         messages тут может оказаться пустым. API требует хотя бы одно непустое сообщение —
-         подставляем короткую служебную реплику-старт, чтобы не словить ошибку на ровном месте */
       messages.push({role:'user', content:'[Начинай сцену.]'});
     }
-    return window.DRALAIT.callModel({system:system, messages:messages, gen: currentGenParams(), images: collectVisionImages()}).then(function(res){
+    return {system: system, messages: messages, gen: currentGenParams(), images: collectVisionImages(), imagesTarget: 'first'};
+  }
+  function generateReply(userText){
+    if(!window.DRALAIT || !window.DRALAIT.callModel) return Promise.resolve({ok:false, error:'engine-unavailable'});
+    var payload = buildGenPayload(userText);
+    return window.DRALAIT.callModel(payload).then(function(res){
       if(!res.ok) return res;
       var parsed = extractState(res.text);
       return {ok:true, text: parsed.text, state: parsed.state, thinking: parsed.thinking};
@@ -15545,6 +16175,7 @@
     var sess = S;
     var input = $('chInput');
     var text = input.value.trim();
+    ensureNotifyPermission();
     var atts = S.draftAtts.map(function(f){ return f.name; });
     /* отправляем своё сообщение — любые открытые рубильнички «показать перевод» на предыдущих
        репликах сами хопа возвращаются к оригиналу на английском, как и просили: в истории
@@ -15645,6 +16276,46 @@
     if(S.instant) renderSheet();
   }
 
+  function applyCharTurnResult(sess, res, textForFallback){
+    var wasHere = (S === sess);
+    withSession(sess, function(){
+      if(wasHere){ var tp = $('chTyping'); if(tp) tp.remove(); }
+      var newMsg;
+      if(res.ok){
+        var minutesPassed = (res.state && typeof res.state.minutes_passed === 'number' && isFinite(res.state.minutes_passed) && res.state.minutes_passed > 0)
+          ? Math.min(Math.round(res.state.minutes_passed), 60 * 24 * 60)
+          : rnd(3, 16);
+        advance(minutesPassed);
+        newMsg = pushMsg('char', res.text);
+        if(res.thinking) newMsg.thinking = res.thinking;
+        if(res.state) applyModelState(res.state, newMsg.id, S.msgs.filter(function(m){ return m.who === 'char' && !m.setup; }).length === 1);
+        else pulseUpdate(textForFallback);
+        var d = dominant();
+        if(S.instant){
+          if(!res.state) sheetAutoFill(textForFallback, newMsg.text, newMsg.id);
+        } else if(!res.state && (S.msgs.length % 6 === 0 || (S.facts.length === 0 && S.msgs.length >= 4))){
+          addFact(pick(FACTS[d] || FACTS.none), false, newMsg.id);
+        }
+        if(S.diaryOn && !res.state && S.msgs.length % 4 === 0){
+          S.diary.push({stamp:stampNow(), text:pick(DIARY[d] || DIARY.none), srcMsgId:newMsg.id});
+        }
+      } else {
+        if(res.error === 'no-key') notice('⚠️ Нет активного API-ключа — подключите его в настройках.');
+        else if(wasHere) showModelErrorModal(res);
+        else notice('⚠️ Не получилось получить ответ' + (res.error ? (' (' + res.error + ')') : '') + '.');
+      }
+      if(newMsg){
+        newMsg.pulseSnap = snapshotPulse();
+        if(S.summarySettings.autoOn && (S.msgs.length - (S.sumMarkerMsgIdx || 0)) >= S.summarySettings.autoEvery && !res.state){
+          collectSummaryFromChat();
+        }
+      }
+      pendingIds[sess.id] = false;
+      registerInCabinet();
+      if(newMsg) notifyBgReply(sess.name, newMsg.text);
+    });
+    if(S === sess){ renderMsgs(); renderTokens(); if(S.instant) renderSheet(); }
+  }
   function requestCharTurn(sess, textForFallback){
     pendingIds[sess.id] = true;
 
@@ -15654,54 +16325,31 @@
       '<div class="ch-bub" style="width:fit-content;"><span class="ch-typing"><i></i><i></i><i></i></span></div></div>');
     scrollDown();
 
-    generateReply(textForFallback).then(function(res){
-      var wasHere = (S === sess);   /* проверяем ДО подмены — внутри withSession S уже станет равен sess всегда */
-      withSession(sess, function(){
-        if(wasHere){ var tp = $('chTyping'); if(tp) tp.remove(); }
-        var newMsg;
-        if(res.ok){
-          /* время идёт по тому, что реально было в реплике, а не вслепую: модель сама сообщает,
-             сколько игровых минут покрывает её ответ (обычный обмен репликами — несколько минут,
-             явный скачок вроде «на следующее утро» — 1440 и больше). Если служебного блока не было
-             вовсе, откатываемся к старой случайной прикидке, чтобы часы всё равно не стояли на месте */
-          var minutesPassed = (res.state && typeof res.state.minutes_passed === 'number' && isFinite(res.state.minutes_passed) && res.state.minutes_passed > 0)
-            ? Math.min(Math.round(res.state.minutes_passed), 60 * 24 * 60) /* потолок — 60 игровых дней за один ход, защита от совсем случайных чисел */
-            : rnd(3, 16);
-          advance(minutesPassed);
-          newMsg = pushMsg('char', res.text);
-          if(res.thinking) newMsg.thinking = res.thinking;
-          if(res.state) applyModelState(res.state, newMsg.id, S.msgs.filter(function(m){ return m.who === 'char' && !m.setup; }).length === 1);
-          else pulseUpdate(textForFallback); /* модель не прислала служебный блок — держим пульс живым старым способом */
-          var d = dominant();
-          if(S.instant){
-            if(!res.state) sheetAutoFill(textForFallback, newMsg.text, newMsg.id);
-          } else if(!res.state && (S.msgs.length % 6 === 0 || (S.facts.length === 0 && S.msgs.length >= 4))){
-            addFact(pick(FACTS[d] || FACTS.none), false, newMsg.id);
-          }
-          if(S.diaryOn && !res.state && S.msgs.length % 4 === 0){
-            S.diary.push({stamp:stampNow(), text:pick(DIARY[d] || DIARY.none), srcMsgId:newMsg.id});
-          }
-        } else {
-          /* модель не ответила — никакого дефолтного/запасного сообщения от персонажа не пишем,
-             в чат ничего не добавляется, время не двигается, пользователю просто показывается ошибка */
-          if(res.error === 'no-key') notice('⚠️ Нет активного API-ключа — подключите его в настройках.');
-          else notice('⚠️ Не получилось получить ответ' + (res.error ? (' (' + res.error + ')') : '') + '.');
-        }
-        if(newMsg){
-          newMsg.pulseSnap = snapshotPulse();
-          if(S.summarySettings.autoOn && (S.msgs.length - (S.sumMarkerMsgIdx || 0)) >= S.summarySettings.autoEvery && !res.state){
-            collectSummaryFromChat();
-          }
-        }
-        pendingIds[sess.id] = false;
-        registerInCabinet();
+    var payload = buildGenPayload(textForFallback);
+    startBgReplyJob(sess, payload).then(function(jobId){
+      if(jobId){
+        /* пошло на сервер — дальше эта же сессия сама доспросит результат, когда он
+           будет готов (по таймеру, пока страница открыта, и сразу же при возврате
+           из фона — см. resolveAllPendingJobs выше) */
+        sess.pendingJobId = jobId;
+        sess.pendingJobTextFallback = textForFallback;
+        pollJobLoop(sess, jobId, 2000);
+        return;
+      }
+      /* фоновый путь недоступен (гость без аккаунта или функция ещё не задеплоена) —
+         старый способ: ждём ответ прямо в этой вкладке, как и раньше */
+      window.DRALAIT.callModel(payload).then(function(rawRes){
+        var res;
+        if(!rawRes.ok) res = rawRes;
+        else{ var parsed = extractState(rawRes.text); res = {ok:true, text: parsed.text, state: parsed.state, thinking: parsed.thinking}; }
+        applyCharTurnResult(sess, res, textForFallback);
       });
-      if(S === sess){ renderMsgs(); renderTokens(); if(S.instant) renderSheet(); }
     });
   }
   $('chContinueBtn').addEventListener('click', function(){
     if(!S.msgs.length || S.msgs[S.msgs.length-1].who !== 'me') return;
     if(pendingIds[S.id]) return;
+    ensureNotifyPermission();
     var lastUserText = S.msgs[S.msgs.length-1].text;
     requestCharTurn(S, lastUserText);
   });
@@ -16253,7 +16901,7 @@
           renderMsgs(true);
           if(res.ok) say('Новый вариант ответа — переключайтесь стрелочками.');
           else if(res.error === 'no-key') notice('⚠️ Нет активного API-ключа — подключите его в настройках.');
-          else notice('⚠️ Не получилось получить ответ' + (res.error ? (' (' + res.error + ')') : '') + '.');
+          else showModelErrorModal(res);
         }
       });
       return;
@@ -16600,6 +17248,15 @@
     setPhoto(S.photo || null); syncLookControls();
     say(S.photo ? 'Вернула аватарку персонажа.' : 'У персонажа нет фото — сцена осталась на цветном фоне.');
   });
+  $('chBgColorPicker').addEventListener('input', function(){
+    S.bg = null; S.bgSolidColor = this.value;
+    applyArt(); syncLookControls();
+  });
+  $('chBgColorClear').addEventListener('click', function(){
+    S.bgSolidColor = null;
+    applyArt(); syncLookControls();
+    say('Свой цвет убран.');
+  });
   $('chBgFullSw').addEventListener('click', function(){
     S.bgFit = S.bgFit === 'full' ? 'side' : 'full';
     applyArt(); syncLookControls();
@@ -16738,6 +17395,51 @@
       '<button class="ch-btn" data-chclose>Отмена</button><button class="ch-btn ch-btn-danger" id="peDelConfirm">Удалить</button>');
     $('peDelConfirm').addEventListener('click', function(){ closeModal(); deletePresetFromEditor(); });
   });
+  document.getElementById('chPeExtraSelectToggle').addEventListener('click', function(){
+    syncExtrasFromDOM();
+    peExtraSelectMode = !peExtraSelectMode;
+    peExtraSelected = {};
+    this.textContent = peExtraSelectMode ? 'Отменить выбор' : 'Выбрать несколько';
+    $('chPeExtraBulkBar').classList.toggle('hidden', !peExtraSelectMode);
+    renderPeExtras();
+  });
+  document.getElementById('chPeExtraSelAll').addEventListener('click', function(){
+    peExtras.forEach(function(e){ peExtraSelected[e.id] = true; });
+    renderPeExtras();
+  });
+  document.getElementById('chPeExtraSelDone').addEventListener('click', function(){
+    peExtraSelectMode = false;
+    peExtraSelected = {};
+    $('chPeExtraSelectToggle').textContent = 'Выбрать несколько';
+    $('chPeExtraBulkBar').classList.add('hidden');
+    renderPeExtras();
+  });
+  document.getElementById('chPeExtraSelDel').addEventListener('click', function(){
+    var ids = Object.keys(peExtraSelected).filter(function(k){ return peExtraSelected[k]; });
+    if(!ids.length){ say('Сначала отметьте промпты для удаления.'); return; }
+    modal('Удалить выбранные промпты?',
+      '<p class="ch-hint" style="margin-top:0;">Будет удалено: ' + ids.length + '. Это действие нельзя отменить.</p>',
+      '<button class="ch-btn" data-chclose>Отмена</button><button class="ch-btn ch-btn-danger" id="peExtraBulkDelConfirm">Удалить</button>');
+    $('peExtraBulkDelConfirm').addEventListener('click', function(){
+      closeModal();
+      peExtras = peExtras.filter(function(x){ return !peExtraSelected[x.id]; });
+      peExtraSelectMode = false;
+      peExtraSelected = {};
+      $('chPeExtraSelectToggle').textContent = 'Выбрать несколько';
+      $('chPeExtraBulkBar').classList.add('hidden');
+      renderPeExtras();
+      say('Промпты удалены.');
+    });
+  });
+  document.getElementById('chPeExtras').addEventListener('change', function(e){
+    var chk = e.target.closest('[data-pe-extracheck]');
+    if(!chk) return;
+    var id = chk.getAttribute('data-pe-extracheck');
+    if(chk.checked) peExtraSelected[id] = true; else delete peExtraSelected[id];
+    var cnt = Object.keys(peExtraSelected).filter(function(k){ return peExtraSelected[k]; }).length;
+    if($('chPeExtraSelCount')) $('chPeExtraSelCount').textContent = cnt;
+    chk.closest('.ch-mini-sw').classList.toggle('on', chk.checked);
+  });
   document.getElementById('chPeExtras').addEventListener('click', function(e){
     var sw = e.target.closest('[data-pe-extrasw]');
     if(sw){
@@ -16751,8 +17453,15 @@
     if(del){
       syncExtrasFromDOM();
       var id2 = del.getAttribute('data-pe-extradel');
-      peExtras = peExtras.filter(function(x){ return x.id !== id2; });
-      renderPeExtras();
+      var extra = peExtras.find(function(x){ return x.id === id2; });
+      modal('Удалить этот промпт?',
+        '<p class="ch-hint" style="margin-top:0;">«' + esc((extra && extra.name) || 'Без названия') + '» будет удалён из пресета. Это действие нельзя отменить.</p>',
+        '<button class="ch-btn" data-chclose>Отмена</button><button class="ch-btn ch-btn-danger" id="peExtraDelConfirm">Удалить</button>');
+      $('peExtraDelConfirm').addEventListener('click', function(){
+        closeModal();
+        peExtras = peExtras.filter(function(x){ return x.id !== id2; });
+        renderPeExtras();
+      });
       return;
     }
     var sv = e.target.closest('[data-pe-extrasave]');
@@ -17353,6 +18062,13 @@
   function openSession(st){
     S = st;
     SESSIONS[S.id] = S;
+    /* если генерация была запущена на сервере, пока чат был закрыт (или страницу перезагрузили) —
+       считаем её всё ещё идущей (защищает от повторного запуска через «Продолжить») и сразу
+       проверяем, не готов ли уже ответ */
+    if(S.pendingJobId){
+      pendingIds[S.id] = true;
+      resolveCharTurnJob(S, S.pendingJobId);
+    }
     S._entrySnap = chatDirtySnapshot(S);
     selectMode = false; selectedMsgs.clear();
     $('scr-chat').classList.remove('selecting');
@@ -17426,6 +18142,17 @@
 
   window.DRALAIT.goChat = function(seed){
     var st = newState(seed);
+    /* факты о персонаже/персоне, подтверждённые ещё до старта в окне «Прежде чем начнём» —
+       сразу в карточку (полотно персонажа/персоны для этой сессии), а не только текстом
+       в общей задумке сцены */
+    if(seed.vibeCharFacts){
+      st.sheet.descFree = (st.sheet.descFree ? st.sheet.descFree + '\n\n' : '') + seed.vibeCharFacts;
+      st.sheet.descSrc = 'vibe-chat';
+    }
+    if(seed.vibePersonaFacts){
+      st.psheet.free = (st.psheet.free ? st.psheet.free + '\n\n' : '') + seed.vibePersonaFacts;
+      st.psheet.freeSrc = 'vibe-chat';
+    }
     if(seed.scene){
       var youName = seed.persona || 'вы';
       var opening = String(seed.scene)
@@ -17445,6 +18172,129 @@
      но сам редактор («страничка») общий, поэтому его открытие выставляем наружу */
   window.DRALAIT.openPresetEditor = function(existing, asCopy){ openPresetEditor(existing || null, !!asCopy); };
 
+})();
+</script>
+
+<script>
+/* ===================== ПРЯМЫЕ КАВЫЧКИ ВМЕСТО «ёлочек» ПРИ РУЧНОМ ВВОДЕ =====================
+   Мобильная раскладка при нажатии на символ кавычки подставляет « и » — заменяем
+   на обычные прямые " прямо во время ввода, сохраняя позицию курсора. */
+(function(){
+  document.addEventListener('input', function(e){
+    var el = e.target;
+    if(!el || !el.value || (el.tagName !== 'TEXTAREA' && !(el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'search')))) return;
+    var val = el.value;
+    if(val.indexOf('«') === -1 && val.indexOf('»') === -1) return;
+    var pos = el.selectionStart;
+    var newVal = val.split('«').join('"').split('»').join('"');
+    if(newVal === val) return;
+    var beforeCursorFixed = val.slice(0, pos).split('«').join('"').split('»').join('"');
+    el.value = newVal;
+    try{ el.setSelectionRange(beforeCursorFixed.length, beforeCursorFixed.length); }catch(err){}
+  }, true);
+})();
+</script>
+
+<script>
+/* ===================== СЧЁТЧИК СИМВОЛОВ/ТОКЕНОВ В КАРТОЧКАХ =====================
+   В каждой строке заполнения персонажа/персоны/лорбука/пресета (и похожих карточек) —
+   две маленькие ненавязчивые рамочки под цвет сайта: символы и оценка токенов.
+   Токены — не точный подсчёт (для этого нужен настоящий токенизатор конкретной модели,
+   которого в браузере нет), а честная оценка: кириллица режется на подтокены заметно
+   мельче латиницы почти у всех современных моделей, поэтому оценка учитывает долю
+   кириллицы в тексте, а не просто делит длину на одно и то же число. */
+(function(){
+  function estimateTokens(text){
+    var s = String(text || '');
+    var nonSpace = s.replace(/\s+/g, '');
+    if(!nonSpace.length) return 0;
+    var cyr = (nonSpace.match(/[а-яёА-ЯЁ]/g) || []).length;
+    var ratio = cyr / nonSpace.length;
+    /* ~2.2 символа на токен для кириллицы, ~4 для латиницы/цифр/остального — линейная
+       смесь по факту доли кириллицы в тексте */
+    var charsPerToken = ratio * 2.2 + (1 - ratio) * 4.0;
+    return Math.max(1, Math.ceil(nonSpace.length / charsPerToken));
+  }
+  window.DRALAIT = window.DRALAIT || {};
+  window.DRALAIT.estimateTokens = estimateTokens;
+
+  function fmtCount(n){
+    return n.toLocaleString('ru-RU');
+  }
+  function ensureCounter(el){
+    if(el.dataset.ftcOn) return;
+    if(el.closest && el.closest('.field-token-counter')) return; /* подстраховка, если вдруг вложено */
+    el.dataset.ftcOn = '1';
+    var wrap = document.createElement('div');
+    wrap.className = 'field-token-counter';
+    wrap.innerHTML = '<span class="ftc-chip ftc-chars"></span><span class="ftc-chip ftc-tokens"></span>';
+    if(el.parentNode) el.parentNode.insertBefore(wrap, el.nextSibling);
+    var charsEl = wrap.querySelector('.ftc-chars');
+    var tokEl = wrap.querySelector('.ftc-tokens');
+    function update(){
+      var v = el.value || '';
+      var chars = v.length;
+      if(!chars){ wrap.style.display = 'none'; return; }
+      wrap.style.display = '';
+      charsEl.textContent = fmtCount(chars) + ' симв.';
+      tokEl.textContent = '~' + fmtCount(estimateTokens(v)) + ' ток.';
+    }
+    el.addEventListener('input', update);
+    update();
+  }
+  function scanContainer(root){
+    if(!root) return;
+    var fields = root.querySelectorAll('textarea, input[type="text"]');
+    for(var i = 0; i < fields.length; i++){
+      var el = fields[i];
+      /* поля названия/поиска/тегов и подобные короткие служебные строки — без счётчика,
+         чтобы не захламлять карточку там, где счёт токенов не имеет практического смысла */
+      if(el.dataset.ftcSkip === '1' || el.type === 'search') continue;
+      if(el.id && /^(chPeTags|chPeName|ipName|regexGroupLabel|ccSearch|cc-search)$/i.test(el.id)) continue;
+      ensureCounter(el);
+    }
+  }
+  var WATCH_SELECTORS = [
+    '#scr-app [data-view="createchar"]',
+    '#scr-app [data-view="createlore"]',
+    '#scr-app [data-view="createperson"]',
+    '#chPresetEditor',
+    '#chModal',
+    '#regexFormOverlay'
+  ];
+  function scanAllWatched(){
+    WATCH_SELECTORS.forEach(function(sel){
+      document.querySelectorAll(sel).forEach(scanContainer);
+    });
+  }
+  var rescanTimer = null;
+  function scheduleRescan(){
+    clearTimeout(rescanTimer);
+    rescanTimer = setTimeout(scanAllWatched, 120);
+  }
+  var mo = new MutationObserver(function(muts){
+    for(var i = 0; i < muts.length; i++){
+      if(muts[i].addedNodes && muts[i].addedNodes.length){ scheduleRescan(); return; }
+    }
+  });
+  function startWatching(){
+    WATCH_SELECTORS.forEach(function(sel){
+      document.querySelectorAll(sel).forEach(function(node){
+        mo.observe(node, {childList:true, subtree:true});
+      });
+    });
+    scanAllWatched();
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', startWatching);
+  } else {
+    startWatching();
+  }
+  /* сами контейнеры (createchar/createperson/createlore) существуют в DOM с самого начала
+     (просто скрыты классом hidden, пока не открыт нужный экран) — MutationObserver на них
+     уже повешен сразу; #chModal/#chPresetEditor/#regexFormOverlay тоже статичны в разметке,
+     меняется только их содержимое, так что дополнительно переподключать observer при
+     переключении экранов не требуется */
 })();
 </script>
 
