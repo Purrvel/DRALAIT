@@ -398,13 +398,13 @@
   .overlay{
     position:fixed; inset:0; z-index:80; display:none;
     background:rgba(5,3,4,.78); backdrop-filter:blur(6px);
-    padding:24px; overflow-y:auto;
+    padding:24px; overflow-y:auto; overflow-x:hidden;
   }
   .overlay.show{display:flex; align-items:flex-start; justify-content:center;}
   .modal{
     background:#140e10; border:1px solid var(--card-line); border-radius:20px;
-    max-width:860px; width:100%; padding:34px; margin:auto;
-    box-shadow:0 40px 120px -40px #000;
+    max-width:860px; width:100%; padding:34px; margin:auto; box-sizing:border-box;
+    box-shadow:0 40px 120px -40px #000; overflow-x:hidden;
   }
   .modal-head{display:flex; justify-content:space-between; gap:20px; align-items:flex-start; margin-bottom:8px;}
   .modal h3{font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:600;}
@@ -591,11 +591,12 @@
   #scr-publib .overlay{
     position:fixed; inset:0; z-index:80; background:rgba(6,4,5,.78); backdrop-filter:blur(5px);
     display:flex; align-items:center; justify-content:center; padding:24px; opacity:0; pointer-events:none; transition:opacity .25s;
+    overflow-x:hidden; overflow-y:auto;
   }
   #scr-publib .overlay.show{opacity:1; pointer-events:auto;}
   #scr-publib .modal{
-    width:100%; max-height:86vh; overflow-y:auto; background:#150e10; border:1px solid var(--card-line);
-    border-radius:18px; padding:28px; box-shadow:0 40px 100px -30px #000;
+    width:100%; max-height:86vh; overflow-y:auto; overflow-x:hidden; background:#150e10; border:1px solid var(--card-line);
+    border-radius:18px; padding:28px; box-sizing:border-box; box-shadow:0 40px 100px -30px #000;
   }
   #scr-publib .x{background:none; border:none; color:var(--muted-2); font-size:17px; cursor:pointer; padding:5px 9px; border-radius:8px; line-height:1;}
   #scr-publib .x:hover{color:var(--text); background:rgba(255,255,255,.06);}
@@ -1677,12 +1678,12 @@
   #scr-app .overlay{
     position:fixed; inset:0; z-index:80; background:rgba(6,4,5,.78); backdrop-filter:blur(5px);
     display:flex; align-items:center; justify-content:center; padding:24px; opacity:0;
-    pointer-events:none; transition:opacity .25s;
+    pointer-events:none; transition:opacity .25s; overflow-x:hidden; overflow-y:auto;
   }
   #scr-app .overlay.show{opacity:1; pointer-events:auto;}
   #scr-app .modal{
-    width:100%; max-width:660px; max-height:86vh; overflow-y:auto; background:#150e10;
-    border:1px solid var(--card-line); border-radius:18px; padding:28px;
+    width:100%; max-width:660px; max-height:86vh; overflow-y:auto; overflow-x:hidden; background:#150e10;
+    border:1px solid var(--card-line); border-radius:18px; padding:28px; box-sizing:border-box;
     box-shadow:0 40px 100px -30px #000;
   }
   #scr-app .modal-head{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:8px;}
@@ -1941,6 +1942,12 @@
     #scr-app .add-card b{font-size:15.1px;}
     #scr-app .add-card small{font-size:12.8px;}
     #scr-app .seg button{font-size:14.1px;}
+    /* библиотека на телефоне: сужаем ряд вкладок (персонажи/персоны/лорбуки/пресеты/промпты), чтобы всё влезало и сайт не «ездил» вбок при свайпе */
+    #scr-app .seg{gap:1px; padding:2px;}
+    #scr-app .seg button{padding:8px 7px;}
+    #scr-app .seg button[data-cat="imgprompts"]{
+      white-space:normal; text-align:center; line-height:1.15; font-size:11px; padding:6px 5px; max-width:64px;
+    }
     #scr-app .chip{font-size:12.8px;}
     #scr-app .empty p{font-size:14.6px;}
     #scr-app .quick button{font-size:14.1px;}
@@ -6333,7 +6340,9 @@
         {k:'food_pref', l:'Предпочтения в еде', ph:'Любимая и нелюбимая еда, пищевые привычки или ограничения'},
         {k:'music_taste', l:'Музыкальные вкусы', ph:'Любимые жанры, исполнители, отношение к музыке'},
         {k:'reputation', l:'Репутация', ph:'Что о нём думают незнакомые люди'},
-        {k:'connections', l:'Связи', ph:'Какие связи есть у персонажа: от Интерпола и старых друзей до уличных бродяг и должников — кто и чем может быть полезен или опасен'}
+        {k:'connections', l:'Связи', ph:'Какие связи есть у персонажа: от Интерпола и старых друзей до уличных бродяг и должников — кто и чем может быть полезен или опасен'},
+        {k:'backstory', l:'Предыстория персонажа', ph:'История до начала игры: детство, ключевые события, поворотный момент, кем был непосредственно перед стартом сюжета и как оказался в текущей ситуации'},
+        {k:'powers', l:'Сверхспособности', ph:'Если персонаж не обычный человек: что умеет, откуда это взялось, есть ли ограничения/цена/слабости. Не заполняйте, если это не нужно персонажу'}
       ]
     },
     { id:'psych', title:'Психологические особенности', hint:'То, что не видно снаружи, но управляет каждой сценой.',
@@ -6365,7 +6374,8 @@
         {k:'children', l:'Отношение к детям', ph:'Например: неуклюж с детьми, но втайне считает их забавными — или на самом деле не выносит'},
         {k:'dreams', l:'Цели и мечты', ph:'Что персонаж хочет получить от жизни в долгосрочной перспективе'},
         {k:'mentalillness', l:'Психическое заболевание', ph:'Например: социопатия, биполярное расстройство, депрессия, аутизм — что угодно. Если оставить пустым, эта категория вообще не будет учитываться'},
-        {k:'addiction', l:'Зависимости', ph:'Алкоголь, наркотики, азартные игры, работа, что угодно ещё — есть ли у персонажа настоящая зависимость и как именно она проявляется в поведении: срывы, ломка, отрицание проблемы. Если оставить пустым, эта категория вообще не будет учитываться'}
+        {k:'addiction', l:'Зависимости', ph:'Алкоголь, наркотики, азартные игры, работа, что угодно ещё — есть ли у персонажа настоящая зависимость и как именно она проявляется в поведении: срывы, ломка, отрицание проблемы. Если оставить пустым, эта категория вообще не будет учитываться'},
+        {k:'selfcontrol', l:'Самоконтроль', ph:'Насколько владеет собой: импульсивен или всё просчитывает заранее, что именно выводит из равновесия, что происходит при потере контроля и как быстро приходит в себя'}
       ]
     },
     { id:'romance', title:'Отношения, чувства, близость', hint:'Раскройте по желанию — влияет на то, как персонаж ведёт себя в близких сценах.',
@@ -8540,8 +8550,8 @@
      то есть предпросмотр у помощника и то, что реально появится в чате, гарантированно совпадают) ---------- */
   var assistCodeBlocks = {}; /* id -> сырой текст кода, для копирования без риска что-то потерять на экранировании */
   var ASSIST_CODE_LABELS = {
-    html:'HTML-код плашки', 'dralait-html':'HTML-код плашки', 'dralait-plashka':'Промпт + код плашки (вставить в промпт пресета)',
-    'dralait-prompt':'Промпт (в главный промпт пресета)', 'dralait-regex':'Regex (в группу regex)',
+    html:'HTML-код плашки', 'dralait-html':'HTML-код плашки (в Regex → «заменить на»)', 'dralait-plashka':'Промпт + код плашки (вставить в промпт пресета)',
+    'dralait-prompt':'Промпт (в главный промпт пресета)', 'dralait-regex':'Regex (поиск — в группу regex)',
     regex:'Regex', css:'CSS', js:'JS', javascript:'JS', json:'JSON', text:'Текст', txt:'Текст'
   };
   function renderAssistCodeBlock(lang, code){
@@ -8559,8 +8569,14 @@
     var label = ASSIST_CODE_LABELS[lang] || (lang ? lang.toUpperCase() : 'Код');
     var canPreview = (lang === 'html' || lang === 'dralait-html' || lang === 'dralait-plashka');
     var canImage = (lang === 'text' || lang === 'txt');
-    var canAddPreset = (lang === 'dralait-prompt' || lang === 'dralait-plashka' || lang === 'dralait-html');
-    var canAddRegex = (lang === 'dralait-regex' || lang === 'regex');
+    /* «Плашка под пресет + regex» отдаёт РОВНО три блока: dralait-prompt (промпт — в пресет),
+       dralait-regex (поиск — в поле regex «искать») и dralait-html (сам код плашки — это то, на
+       ЧТО заменяется найденное, поэтому ему место в поле regex «заменить на», а не в пресете).
+       dralait-plashka — отдельный, самостоятельный сценарий (без регекса вообще): один цельный
+       блок инструкция+код, который целиком копируется прямо в промпт пресета — его не трогаем. */
+    var canAddPreset = (lang === 'dralait-prompt' || lang === 'dralait-plashka');
+    var canAddRegexSearch = (lang === 'dralait-regex' || lang === 'regex');
+    var canAddRegexReplace = (lang === 'dralait-html');
     return '<div class="assist-code" style="margin:8px 0; border:1px solid rgba(255,255,255,.12); border-radius:10px; overflow:hidden; background:rgba(0,0,0,.25);">' +
       '<div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 10px; background:rgba(255,255,255,.05); font-size:11.5px; letter-spacing:.03em; text-transform:uppercase; color:var(--muted);">' +
         '<span>' + escA(label) + '</span>' +
@@ -8568,7 +8584,8 @@
           (canPreview ? '<button type="button" class="btn btn-sm" data-acbpreview="' + id + '" style="padding:3px 9px; font-size:11px;">Показать</button>' : '') +
           (canImage ? '<button type="button" class="btn btn-sm" data-acbimg="' + id + '" style="padding:3px 9px; font-size:11px;">🖼 Создать изображение</button>' : '') +
           (canAddPreset ? '<button type="button" class="btn btn-sm" data-acbaddpreset="' + id + '" style="padding:3px 9px; font-size:11px;">📌 В пресет</button>' : '') +
-          (canAddRegex ? '<button type="button" class="btn btn-sm" data-acbaddregex="' + id + '" style="padding:3px 9px; font-size:11px;">📌 В Regex</button>' : '') +
+          (canAddRegexSearch ? '<button type="button" class="btn btn-sm" data-acbaddregex="' + id + '" data-acbregexfield="pattern" style="padding:3px 9px; font-size:11px;">📌 В Regex</button>' : '') +
+          (canAddRegexReplace ? '<button type="button" class="btn btn-sm" data-acbaddregex="' + id + '" data-acbregexfield="replace" style="padding:3px 9px; font-size:11px;">📌 В Regex</button>' : '') +
           '<button type="button" class="btn btn-sm" data-acbcopy="' + id + '" style="padding:3px 9px; font-size:11px;">Скопировать</button>' +
         '</span>' +
       '</div>' +
@@ -8724,10 +8741,13 @@
       });
       return;
     }
-    /* «Добавить в Regex» — то же самое, но в выбранную группу правил */
+    /* «Добавить в Regex» — то же самое, но в выбранную группу правил. Поле, в которое уходит
+       код (поиск/«искать» или «заменить на»), определяет data-acbregexfield на самой кнопке —
+       см. renderAssistCodeBlock: dralait-regex → поиск, dralait-html → заменить на. */
     var addRegexBtn = e.target.closest && e.target.closest('[data-acbaddregex]');
     if(addRegexBtn){
       var arId = addRegexBtn.getAttribute('data-acbaddregex');
+      var arField = addRegexBtn.getAttribute('data-acbregexfield') || 'pattern';
       var arCode = (assistCodeBlocks[arId] || '').trim();
       if(!arCode) return;
       var groups = (window.DRALAIT.REGEX_GROUPS || []);
@@ -8739,22 +8759,64 @@
         return '<button type="button" class="vc" data-acbtarget="' + i + '" style="text-align:left; width:100%; display:block;"><span class="name">' + escA(g.label || 'Без названия') + '</span></button>';
       }).join('');
       var rlist = groups.slice().reverse();
-      var rm = assistModal('В какую группу Regex добавить?', rbody, '<button class="btn" data-close>Отмена</button>');
+      var rm = assistModal(arField === 'replace' ? 'В какую группу Regex добавить код плашки?' : 'В какую группу Regex добавить?', rbody, '<button class="btn" data-close>Отмена</button>');
       if(!rm) return;
       rm.querySelectorAll('[data-acbtarget]').forEach(function(btn){
         btn.addEventListener('click', function(){
           var group = rlist[+btn.getAttribute('data-acbtarget')];
           if(!group) return;
-          group.rules = group.rules || [];
-          group.rules.push({id: uid(), name: 'Из ИИ-помощника, ' + new Date().toLocaleDateString('ru-RU'), pattern: arCode, replace: ''});
-          if(window.DRALAIT.dbSaveAsset) window.DRALAIT.dbSaveAsset('regex_group', group);
-          closeModal();
-          say('Добавила правилом в группу «' + group.label + '» — поле «заменить на» оставила пустым, доуточните в настройках Regex.');
+          if(arField === 'replace'){
+            /* код плашки — это не отдельный промпт и не отдельное правило само по себе, а то,
+               НА ЧТО заменяется совпадение уже существующего (или ещё не заведённого) правила —
+               поэтому сначала спрашиваем, в какое именно правило группы вписать «заменить на» */
+            showRuleReplacePicker(group, arCode);
+          } else {
+            group.rules = group.rules || [];
+            group.rules.push({id: uid(), name: 'Из ИИ-помощника, ' + new Date().toLocaleDateString('ru-RU'), pattern: arCode, replace: ''});
+            if(window.DRALAIT.dbSaveAsset) window.DRALAIT.dbSaveAsset('regex_group', group);
+            closeModal();
+            say('Добавила правилом в группу «' + group.label + '» — поле «заменить на» оставила пустым, доуточните в настройках Regex.');
+          }
         });
       });
       return;
     }
   });
+  /* второй шаг для кода плашки: в какое именно правило группы вписать «заменить на» — либо
+     в уже существующее (например, то самое, куда только что ушёл поиск из dralait-regex),
+     либо завести новое правило сразу с этим кодом и пустым полем поиска. */
+  function showRuleReplacePicker(group, code){
+    var rules = group.rules || [];
+    var body = '<button type="button" class="vc" data-ruletarget="new" style="text-align:left; width:100%; display:block; margin-bottom:6px;">' +
+        '<span class="name">+ Новое правило</span>' +
+        '<span class="sample" style="font-style:normal; font-size:12px;">Заведёт правило только с этим кодом в поле «заменить на» — поиск впишете сами</span>' +
+      '</button>' +
+      rules.map(function(r, i){
+        return '<button type="button" class="vc" data-ruletarget="' + i + '" style="text-align:left; width:100%; display:block;">' +
+          '<span class="name">' + escA(r.name || 'Без названия') + '</span>' +
+          '<span class="sample" style="font-style:normal; font-size:12px;">' + escA((r.pattern || 'поиск ещё не задан').slice(0, 60)) + '</span>' +
+        '</button>';
+      }).join('');
+    var rm2 = assistModal('В какое правило вписать код (поле «заменить на»)?', body, '<button class="btn" data-close>Отмена</button>');
+    if(!rm2) return;
+    rm2.querySelectorAll('[data-ruletarget]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var t = btn.getAttribute('data-ruletarget');
+        var group2 = group;
+        if(t === 'new'){
+          group2.rules = group2.rules || [];
+          group2.rules.push({id: uid(), name: 'Из ИИ-помощника, ' + new Date().toLocaleDateString('ru-RU'), pattern: '', replace: code});
+        } else {
+          var rule = group2.rules[+t];
+          if(!rule) return;
+          rule.replace = code;
+        }
+        if(window.DRALAIT.dbSaveAsset) window.DRALAIT.dbSaveAsset('regex_group', group2);
+        closeModal();
+        say('Добавила код плашки в «заменить на» группы «' + group2.label + '».');
+      });
+    });
+  }
   function rebuildAssistMsgsFromDOM(){
     assistMsgs = [];
     cbBody.querySelectorAll('.msg').forEach(function(m){
@@ -8871,7 +8933,7 @@
     '— Когда собираешь HTML-плашку (или что угодно другое, что удобно копировать отдельно — Regex, промпт), всегда оформляй итоговый код в тройных обратных кавычках (Markdown fenced code block) с указанием языка, например ```html ... ``` — интерфейс сайта автоматически превращает такой блок в отдельное окошко с кнопкой «Скопировать» и (для html) кнопкой живого предпросмотра. Не разбивай один и тот же кусок кода на несколько блоков без необходимости, и не пиши код прямо в тексте без тройных кавычек.',
     '— Когда пользователь просит собрать HTML-плашку напрямую в переписке (а не через горячую клавишу «Плашка под пресет + regex» — то есть без отдельного regex, просто HTML-код, который вставляется прямо в промпт пресета): у многих плашек есть своя логика — когда именно она должна появляться в игре, какие у неё поля/значения, когда и как они должны меняться, как это должно влиять на поведение персонажа (например, шкала сытости — как она снижается по ходу игры и что персонаж должен делать при низком значении; это просто пример, не единственный вариант). Пользователь не должен сам ничего из этого придумывать или дописывать — придумываешь и явно объясняешь это ты. Оформи такой ответ ОДНИМ блоком с тегом ```dralait-plashka ... ``` — внутри блока сначала короткая, но исчерпывающая инструкция для модели-рассказчика в квадратных скобках (лучше на английском — модели точнее следуют инструкциям на английском), объясняющая всю логику плашки: когда её показывать, что в ней должно быть, когда и как значения должны меняться, как это отражается на поведении персонажа. Сразу следом, в том же блоке, без разделения на два отдельных блока — сам HTML/CSS-код плашки. Если в плашке должно быть что-то динамическое (смена цветов, анимация, разное поведение в зависимости от значения) — это прописывается прямо в самом коде (HTML/CSS), а не оставляется на усмотрение пользователя: пользователь должен только скопировать готовое целиком и вставить в промпт пресета, больше от него ничего не требуется.',
     '— Про изображения — очень важно различать два разных запроса. Если пользователь просит именно ПРОМПТ для картинки (текст, который он сам куда-то вставит) — выведи готовый промпт в блоке ```text ... ``` (пользователь скопирует его сам). Но если пользователь явно просит СОЗДАТЬ, НАРИСОВАТЬ, СГЕНЕРИРОВАТЬ саму картинку (а не промпт для неё) — не выводи промпт как текст для копирования: вместо этого напиши готовый промпт для генерации в блоке ```dralait-genimage ... ``` — сайт сам, автоматически, без всяких дополнительных действий пользователя, сгенерирует по этому промпту изображение и покажет его прямо в чате. В этом случае самого текста промпта пользователю показывать не нужно — только короткую фразу вроде «Рисую» перед блоком.',
-    '— Блоки ```dralait-prompt```, ```dralait-plashka```, ```dralait-html``` и ```dralait-regex``` показываются с кнопкой «📌 В пресет» / «📌 В Regex» — по нажатию пользователь выбирает нужный пресет или группу Regex из своей библиотеки, и код добавляется туда сам, без копирования и без выхода из этого разговора. Если пользователь прямо просит «добавь это в пресет» или «добавь в Regex» — не нужно ничего делать самому за него: просто оформи код в правильном блоке и скажи, что теперь можно нажать эту кнопку и выбрать пресет/группу.',
+    '— Блоки ```dralait-prompt``` и ```dralait-plashka``` показываются с кнопкой «📌 В пресет»; ```dralait-regex``` — с кнопкой «📌 В Regex» (уходит в поле «искать»); ```dralait-html``` — тоже с кнопкой «📌 В Regex», но уходит в поле «заменить на» того правила, которое выберет пользователь (код плашки — это то, на что заменяется найденное регулярным выражением, а не отдельный промпт). По нажатию пользователь выбирает нужный пресет или группу Regex из своей библиотеки, и код добавляется туда сам, без копирования и без выхода из этого разговора. Если пользователь прямо просит «добавь это в пресет» или «добавь в Regex» — не нужно ничего делать самому за него: просто оформи код в правильном блоке и скажи, что теперь можно нажать эту кнопку.',
     '— Готовые персонажей/персон/лорбуки/пресеты можно опубликовать в общую библиотеку для всех пользователей сайта; на публикацию можно пожаловаться кнопкой «Пожаловаться» — жалобы видит только хозяйка сайта в своём кабинете и может либо отклонить жалобу, либо сразу убрать публикацию из общей библиотеки.',
     '— Раздел «Глобальные правила» в кабинете хозяйки сайта позволяет ей менять системные инструкции для всего сайта (правило про карточку персонажа, про ООС-реплики в квадратных скобках, и отдельно — правила именно для тебя, ИИ-помощника) без правки кода; эти правила могут появляться и меняться уже после того, как ты был обучен на этой инструкции — учитывай их как более свежий и приоритетный источник.',
     'Если пользователь новичок и явно потерялся или спрашивает "как тут вообще всё устроено" / "что это за кнопка" / у него что-то не работает — объясняй по-человечески и конкретно, без канцелярита, и если причина неочевидна — спрашивай, что именно он видит на экране (ошибку, пустой экран, отсутствие ответа и т.п.), прежде чем гадать.',
@@ -10571,8 +10633,8 @@
           '<span class="chat-meta"><b>' + escA(g.label) + '</b><span>' + g.rules.length + ' regex' + (g.rules.length === 1 ? '' : (g.rules.length < 5 ? 'а' : 'ов')) + '</span></span>' +
         '</div>' +
         '<div style="display:flex; gap:6px; flex-shrink:0; flex-wrap:wrap; justify-content:flex-end;">' +
-          '<button type="button" class="btn btn-sm" data-regex-export="' + g.id + '">Экспорт</button>' +
           '<button type="button" class="btn btn-sm" data-regex-edit="' + g.id + '">Изменить</button>' +
+          '<button type="button" class="icon-btn" data-regex-export="' + g.id + '" title="Экспортировать группу" aria-label="Экспортировать группу"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 17v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2"/></svg></button>' +
           '<button type="button" class="icon-btn" data-regex-del="' + g.id + '" title="Удалить группу" aria-label="Удалить группу"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m2 0-1 13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 7"/></svg></button>' +
         '</div>' +
       '</div>';
@@ -11903,8 +11965,12 @@
     background:rgba(10,7,8,.6); border:1px solid var(--card-line); border-radius:22px;
     backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
     padding:12px 16px 14px; box-shadow:0 24px 60px -24px #000; pointer-events:auto;
+    /* порядок блоков задаём через flex order (а не через порядок в разметке) — так расположение
+       не зависит от порядка тегов в HTML и не ломается, если он когда-нибудь поменяется.
+       На десктопе горячие клавиши традиционно НАД строкой ввода (order:2, до order:4 у неё). */
+    display:flex; flex-direction:column;
   }
-  #scr-chat .ch-atts{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:7px;}
+  #scr-chat .ch-atts{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:7px; order:1;}
   #scr-chat .ch-atts:empty{display:none;}
   #scr-chat .ch-atts .chip{
     display:inline-flex; align-items:center; gap:7px; font-size:11px; color:#cbbdb8;
@@ -11912,7 +11978,7 @@
   }
   #scr-chat .ch-atts .chip button{background:none; border:none; color:var(--muted-2); cursor:pointer; font-size:12px; line-height:1; padding:0;}
   #scr-chat .ch-atts .chip button:hover{color:#e6899a;}
-  #scr-chat .ch-tools{display:flex; align-items:center; gap:6px; margin-bottom:8px; flex-wrap:wrap;}
+  #scr-chat .ch-tools{display:flex; align-items:center; gap:6px; margin-bottom:8px; flex-wrap:wrap; order:2;}
   #scr-chat .ch-tool{
     height:28px; padding:0 10px; border-radius:8px; border:1px solid var(--card-line); background:transparent;
     color:var(--muted); cursor:pointer; font-family:'Manrope',sans-serif; font-size:11.5px; font-weight:600;
@@ -11924,10 +11990,10 @@
   #scr-chat .ch-continue-strip{
     display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
     padding:10px 14px; margin-bottom:10px; border:1px dashed rgba(201,168,106,.4); border-radius:12px;
-    background:rgba(201,168,106,.06); font-size:12.5px; color:var(--muted-2);
+    background:rgba(201,168,106,.06); font-size:12.5px; color:var(--muted-2); order:3;
   }
   #scr-chat .ch-continue-strip.hidden{display:none;}
-  #scr-chat .ch-inputrow{display:flex; align-items:center; gap:9px;}
+  #scr-chat .ch-inputrow{display:flex; align-items:center; gap:9px; order:4;}
   #scr-chat .ch-inputrow textarea{
     flex:1; min-height:44px; max-height:170px; border-radius:22px; padding:11px 18px;
     font-size:13.5px; line-height:1.6; resize:none; background:rgba(255,255,255,.045);
@@ -11945,12 +12011,12 @@
   .ch-overlay{
     position:fixed; inset:0; z-index:98; background:rgba(6,4,5,.8); backdrop-filter:blur(5px);
     display:flex; align-items:center; justify-content:center; padding:24px; opacity:0;
-    pointer-events:none; transition:opacity .25s;
+    pointer-events:none; transition:opacity .25s; overflow-x:hidden; overflow-y:auto;
   }
   .ch-overlay.show{opacity:1; pointer-events:auto;}
   .ch-modal{
-    width:100%; max-width:600px; max-height:86vh; overflow-y:auto; background:#150e10;
-    border:1px solid var(--card-line); border-radius:18px; padding:26px; box-shadow:0 40px 100px -30px #000;
+    width:100%; max-width:600px; max-height:86vh; overflow-y:auto; overflow-x:hidden; background:#150e10;
+    border:1px solid var(--card-line); border-radius:18px; padding:26px; box-sizing:border-box; box-shadow:0 40px 100px -30px #000;
   }
   .ch-modal-head{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:14px;}
   .ch-modal-head h3{font-family:'Cormorant Garamond',serif; font-size:23px; font-weight:600;}
@@ -11982,6 +12048,7 @@
     position:fixed; inset:0; z-index:97; background:var(--ink);
     display:flex; flex-direction:column; opacity:0; pointer-events:none;
     transform:translateY(14px); transition:opacity .22s ease, transform .22s ease;
+    overflow-x:hidden; max-width:100vw;
   }
   .ch-pe.show{opacity:1; pointer-events:auto; transform:none;}
   .ch-pe-head{
@@ -11990,12 +12057,12 @@
   }
   .ch-pe-head h2{font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600;}
   .ch-pe-body{
-    flex:1; overflow-y:auto; padding:26px; max-width:640px; margin:0 auto; width:100%;
+    flex:1; overflow-y:auto; overflow-x:hidden; padding:26px; max-width:640px; margin:0 auto; width:100%; box-sizing:border-box;
   }
   .ch-pe-body input[type="text"], .ch-pe-body textarea{
     width:100%; font-family:'Manrope',sans-serif; font-size:13.5px; color:var(--text);
     background:rgba(255,255,255,.03); border:1px solid var(--card-line); border-radius:10px;
-    padding:11px 13px; transition:border-color .2s; line-height:1.6;
+    padding:11px 13px; transition:border-color .2s; line-height:1.6; box-sizing:border-box;
   }
   .ch-pe-body input:focus, .ch-pe-body textarea:focus{border-color:var(--blood-2); outline:none;}
   .ch-pe-body textarea{resize:vertical;}
@@ -12004,9 +12071,10 @@
     width:100%; display:flex; align-items:center; gap:10px; text-align:left; cursor:pointer;
     border:1px solid rgba(201,168,106,.35); background:rgba(201,168,106,.05); border-radius:12px;
     padding:12px 15px; font-family:'Manrope',sans-serif; transition:background .18s, border-color .18s;
+    box-sizing:border-box;
   }
   .ch-pe-mainrow:hover{background:rgba(201,168,106,.09); border-color:rgba(201,168,106,.5);}
-  .ch-pe-mainrow-name{flex:1; font-size:13.5px; font-weight:600; color:var(--gold);}
+  .ch-pe-mainrow-name{flex:1; font-size:13.5px; font-weight:600; color:var(--gold); min-width:0; overflow-wrap:break-word;}
   .ch-pe-mainrow-arrow{color:var(--muted-2); font-size:15px;}
   .ch-pe-bang{
     display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px;
@@ -12016,19 +12084,20 @@
     border:1px solid var(--card-line); border-radius:12px; padding:12px 14px; margin-bottom:10px;
     background:rgba(255,255,255,.015);
   }
-  .ch-pe-extra-top{display:flex; align-items:center; gap:8px; margin-bottom:8px;}
-  .ch-pe-extra-top input[type="text"]{flex:1;}
+  .ch-pe-extra-top{display:flex; align-items:center; gap:8px; margin-bottom:8px; flex-wrap:wrap;}
+  .ch-pe-extra-top input[type="text"]{flex:1; min-width:0;}
   /* свёрнутый доп. промпт — компактная строка, видно только название */
   .ch-pe-extra.ch-pe-extra-collapsed{display:flex; align-items:center; gap:8px; padding:8px 10px;}
   .ch-pe-extra-namebtn{
-    flex:1; display:flex; align-items:center; justify-content:space-between; gap:8px;
+    flex:1; min-width:0; display:flex; align-items:center; justify-content:space-between; gap:8px;
     background:none; border:none; text-align:left; cursor:pointer; padding:4px 2px;
     font-family:'Manrope',sans-serif; font-size:13px; color:var(--text);
   }
+  .ch-pe-extra-namebtn span:first-child{overflow-wrap:break-word; min-width:0;}
   .ch-pe-extra-namebtn:hover span:first-child{color:var(--gold);}
   .ch-pe-extra-arrow{color:var(--muted-2); font-size:14px; flex-shrink:0;}
   .ch-pe-foot{
-    display:flex; align-items:center; gap:10px; padding:16px 26px; flex-shrink:0;
+    display:flex; align-items:center; gap:10px; padding:16px 26px; flex-shrink:0; flex-wrap:wrap;
     border-top:1px solid var(--card-line); background:rgba(15,10,11,.7);
   }
 
@@ -12116,18 +12185,14 @@
     /* горячие клавиши (вложить/ООС/**/""/написать за меня/голос) — на телефоне НЕ отдельной
        строкой над полем ввода (туда неудобно тянуться большим пальцем) и не сбоку от него,
        а отдельной строкой ПОД строкой ввода и кнопкой отправки, прижатой к правому краю —
-       прямо над клавиатурой, в зоне досягаемости большого пальца. */
-    #scr-chat .ch-bottom-inner{
-      display:grid;
-      grid-template-columns:1fr;
-      grid-template-areas:"atts" "continue" "input" "tools";
-      align-items:end; row-gap:6px;
-    }
-    #scr-chat .ch-atts{grid-area:atts; margin-bottom:0;}
-    #scr-chat .ch-continue-strip{grid-area:continue; margin-bottom:0;}
-    #scr-chat .ch-inputrow{grid-area:input;}
+       прямо над клавиатурой, в зоне досягаемости большого пальца. Меняем именно flex-order
+       (родитель уже flex-column) — это не зависит от того, в каком порядке блоки идут в
+       самой разметке, и не ломается, если что-то в HTML поменяется местами. */
+    #scr-chat .ch-atts{order:1;}
+    #scr-chat .ch-continue-strip{order:2;}
+    #scr-chat .ch-inputrow{order:3;}
     #scr-chat .ch-tools{
-      grid-area:tools; margin-bottom:0;
+      order:4; margin-bottom:0;
       flex-direction:row; flex-wrap:wrap; gap:6px;
       justify-content:flex-end;
     }
@@ -12199,6 +12264,16 @@
     .ch-pe-extra-arrow{font-size:15.6px;}
     #scr-chat .ch-diary-entry .st{font-size:11.8px;}
     #scr-chat .ch-color-row span{font-size:12.8px;}
+    /* редактор пресета на телефоне «ездил» вбок — тесный фиксированный отступ 26px и
+       негнущиеся кнопки в подвале (без переноса) были шире экрана. Сужаем поля и разрешаем
+       кнопкам переноситься, а не толкать всю страницу в горизонтальный скролл. */
+    .ch-pe-head{padding:12px 14px; gap:10px;}
+    .ch-pe-head h2{font-size:18px;}
+    .ch-pe-body{padding:14px;}
+    .ch-pe-foot{padding:12px 14px; gap:8px;}
+    .ch-pe-foot .ch-btn{flex:1 1 auto; text-align:center;}
+    .ch-overlay{padding:14px;}
+    .ch-modal{padding:18px;}
   }
 </style>
 
@@ -12484,6 +12559,19 @@
       <footer class="ch-bottom">
         <div class="ch-bottom-inner" id="chBottomInner">
           <div class="ch-atts" id="chAtts"></div>
+          <div class="ch-continue-strip hidden" id="chContinueStrip">
+            <span>Ответа персонажа пока нет.</span>
+            <button type="button" class="ch-btn ch-btn-solid" id="chContinueBtn">Продолжить — пусть ответит</button>
+          </div>
+          <div class="ch-inputrow">
+            <textarea id="chInput" rows="1" placeholder="Пишите сцену…"></textarea>
+            <button class="ch-send" id="chSend" type="button" aria-label="Отправить">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12 20 4l-4.5 16-3.5-6.5L4 12Z"/></svg>
+            </button>
+          </div>
+          <!-- горячие клавиши сознательно идут ПОСЛЕДНИМИ в разметке (после строки ввода) —
+               так их порядок в ленте документа сам совпадает с тем, что нужно на мобильном
+               (под полем ввода), без хрупкой зависимости от grid-area/порядка отрисовки. -->
           <div class="ch-tools">
             <button class="ch-tool" id="chAttach" type="button" title="Прикрепить файл">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 11.5 12 19.5a4.5 4.5 0 0 1-6.4-6.4l8.5-8.4a3 3 0 0 1 4.3 4.3l-8.5 8.4a1.5 1.5 0 0 1-2.1-2.1l7.8-7.8"/></svg>
@@ -12507,16 +12595,6 @@
             <button class="ch-tool hidden" id="chTrToEn" type="button" title="Перевести написанное на английский, прежде чем отправить">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 4 6 4 9s-1.5 6.3-4 9c-2.5-2.7-4-6-4-9s1.5-6.3 4-9Z"/></svg>
               <span class="lbl">Перевести на EN</span>
-            </button>
-          </div>
-          <div class="ch-continue-strip hidden" id="chContinueStrip">
-            <span>Ответа персонажа пока нет.</span>
-            <button type="button" class="ch-btn ch-btn-solid" id="chContinueBtn">Продолжить — пусть ответит</button>
-          </div>
-          <div class="ch-inputrow">
-            <textarea id="chInput" rows="1" placeholder="Пишите сцену…"></textarea>
-            <button class="ch-send" id="chSend" type="button" aria-label="Отправить">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12 20 4l-4.5 16-3.5-6.5L4 12Z"/></svg>
             </button>
           </div>
         </div>
@@ -12731,16 +12809,7 @@
       <span class="ch-pe-mainrow-arrow">›</span>
     </button>
 
-    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:12px;">
-      <label class="ch-lab" style="margin:0;">Дополнительные промпты</label>
-      <button class="ch-btn ch-btn-sm" id="chPeExtraSelectToggle" type="button" style="flex-shrink:0;">Выбрать несколько</button>
-    </div>
-    <div id="chPeExtraBulkBar" class="hidden" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:8px 12px; margin-bottom:8px; border:1px dashed rgba(201,168,106,.4); border-radius:10px; background:rgba(201,168,106,.06); font-size:12.5px;">
-      <span>Выбрано: <b id="chPeExtraSelCount">0</b></span>
-      <button type="button" class="ch-btn ch-btn-sm" id="chPeExtraSelAll">Выбрать все</button>
-      <button type="button" class="ch-btn ch-btn-sm ch-btn-danger" id="chPeExtraSelDel">Удалить выбранные</button>
-      <button type="button" class="ch-btn ch-btn-sm" id="chPeExtraSelDone">Готово</button>
-    </div>
+    <label class="ch-lab" style="margin-top:12px;">Дополнительные промпты</label>
     <div id="chPeExtras"></div>
     <button class="ch-btn ch-btn-dash" id="chPeAddExtra" type="button" style="width:100%;">+ Добавить промпт</button>
 
@@ -15150,10 +15219,6 @@
     peEditing = editable;
     var src = existing || {};
     peExtras = src.extras ? JSON.parse(JSON.stringify(src.extras)).map(function(e){ e.collapsed = true; return e; }) : [];
-    peExtraSelectMode = false;
-    peExtraSelected = {};
-    if($('chPeExtraBulkBar')) $('chPeExtraBulkBar').classList.add('hidden');
-    if($('chPeExtraSelectToggle')) $('chPeExtraSelectToggle').textContent = 'Выбрать несколько';
     peMainName = src.mainPromptName || 'Главный промпт';
     peMainText = src.mainPrompt || '';
     $('chPeTitle').textContent = editable ? 'Изменить пресет' : 'Новый пресет';
@@ -15210,31 +15275,22 @@
       peExtras.forEach(function(e){ if(e.id === id) e.text = ta.value; });
     });
   }
-  var peExtraSelectMode = false;
-  var peExtraSelected = {};
   function renderPeExtras(){
-    var checkbox = function(e){
-      return peExtraSelectMode
-        ? '<label class="ch-mini-sw' + (peExtraSelected[e.id] ? ' on' : '') + '" style="flex-shrink:0;"><input type="checkbox" data-pe-extracheck="' + e.id + '" ' + (peExtraSelected[e.id] ? 'checked' : '') + ' style="position:absolute; opacity:0; width:20px; height:20px; margin:0; cursor:pointer;"></label>'
-        : '';
-    };
     $('chPeExtras').innerHTML = peExtras.length ? peExtras.map(function(e){
       if(e.collapsed){
         return '<div class="ch-pe-extra ch-pe-extra-collapsed" data-pe-extra="' + e.id + '">' +
-          checkbox(e) +
           '<button class="ch-mini-sw' + (e.on ? ' on' : '') + '" data-pe-extrasw="' + e.id + '" aria-label="Включить или выключить" title="Включить/выключить"></button>' +
           '<button type="button" class="ch-pe-extra-namebtn" data-pe-extraexpand="' + e.id + '">' +
             '<span>' + esc(e.name || 'Без названия') + '</span><span class="ch-pe-extra-arrow">›</span>' +
           '</button>' +
-          (peExtraSelectMode ? '' : '<button class="ch-x" data-pe-extradel="' + e.id + '" aria-label="Удалить">✕</button>') +
+          '<button class="ch-x" data-pe-extradel="' + e.id + '" aria-label="Удалить">✕</button>' +
         '</div>';
       }
       return '<div class="ch-pe-extra" data-pe-extra="' + e.id + '">' +
         '<div class="ch-pe-extra-top">' +
-          checkbox(e) +
           '<button class="ch-mini-sw' + (e.on ? ' on' : '') + '" data-pe-extrasw="' + e.id + '" aria-label="Включить или выключить" title="Включить/выключить"></button>' +
           '<input type="text" data-pe-extraname="' + e.id + '" value="' + esc(e.name).replace(/"/g,'&quot;') + '" placeholder="Название промпта">' +
-          (peExtraSelectMode ? '' : '<button class="ch-x" data-pe-extradel="' + e.id + '" aria-label="Удалить">✕</button>') +
+          '<button class="ch-x" data-pe-extradel="' + e.id + '" aria-label="Удалить">✕</button>' +
         '</div>' +
         (window.DRALAIT.hotkeyBtns ? '<div style="display:flex; gap:6px; flex-wrap:wrap; margin:6px 0;">' + window.DRALAIT.hotkeyBtns('peExtraText_' + e.id) +
           '<button type="button" class="cc-tr-btn" data-tr="peExtraText_' + e.id + '" data-trlang="en" title="Перевести на английский"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 4 6 4 9s-1.5 6.3-4 9c-2.5-2.7-4-6-4-9s1.5-6.3 4-9Z"/></svg>EN</button>' +
@@ -15244,8 +15300,6 @@
         '<button type="button" class="ch-btn ch-btn-solid" data-pe-extrasave="' + e.id + '" style="margin-top:9px; width:100%;">Сохранить</button>' +
       '</div>';
     }).join('') : '<p class="ch-hint" style="margin-top:0;">Пока ни одного — добавьте первый.</p>';
-    var cnt = Object.keys(peExtraSelected).filter(function(k){ return peExtraSelected[k]; }).length;
-    if($('chPeExtraSelCount')) $('chPeExtraSelCount').textContent = cnt;
   }
   function addPeExtra(){
     syncExtrasFromDOM();
@@ -17540,51 +17594,6 @@
       '<p class="ch-hint" style="margin-top:0;">«' + esc(peEditing.n) + '» пропадёт из вашей библиотеки. Опубликованная копия (если была) останется как есть.</p>',
       '<button class="ch-btn" data-chclose>Отмена</button><button class="ch-btn ch-btn-danger" id="peDelConfirm">Удалить</button>');
     $('peDelConfirm').addEventListener('click', function(){ closeModal(); deletePresetFromEditor(); });
-  });
-  document.getElementById('chPeExtraSelectToggle').addEventListener('click', function(){
-    syncExtrasFromDOM();
-    peExtraSelectMode = !peExtraSelectMode;
-    peExtraSelected = {};
-    this.textContent = peExtraSelectMode ? 'Отменить выбор' : 'Выбрать несколько';
-    $('chPeExtraBulkBar').classList.toggle('hidden', !peExtraSelectMode);
-    renderPeExtras();
-  });
-  document.getElementById('chPeExtraSelAll').addEventListener('click', function(){
-    peExtras.forEach(function(e){ peExtraSelected[e.id] = true; });
-    renderPeExtras();
-  });
-  document.getElementById('chPeExtraSelDone').addEventListener('click', function(){
-    peExtraSelectMode = false;
-    peExtraSelected = {};
-    $('chPeExtraSelectToggle').textContent = 'Выбрать несколько';
-    $('chPeExtraBulkBar').classList.add('hidden');
-    renderPeExtras();
-  });
-  document.getElementById('chPeExtraSelDel').addEventListener('click', function(){
-    var ids = Object.keys(peExtraSelected).filter(function(k){ return peExtraSelected[k]; });
-    if(!ids.length){ say('Сначала отметьте промпты для удаления.'); return; }
-    modal('Удалить выбранные промпты?',
-      '<p class="ch-hint" style="margin-top:0;">Будет удалено: ' + ids.length + '. Это действие нельзя отменить.</p>',
-      '<button class="ch-btn" data-chclose>Отмена</button><button class="ch-btn ch-btn-danger" id="peExtraBulkDelConfirm">Удалить</button>');
-    $('peExtraBulkDelConfirm').addEventListener('click', function(){
-      closeModal();
-      peExtras = peExtras.filter(function(x){ return !peExtraSelected[x.id]; });
-      peExtraSelectMode = false;
-      peExtraSelected = {};
-      $('chPeExtraSelectToggle').textContent = 'Выбрать несколько';
-      $('chPeExtraBulkBar').classList.add('hidden');
-      renderPeExtras();
-      say('Промпты удалены.');
-    });
-  });
-  document.getElementById('chPeExtras').addEventListener('change', function(e){
-    var chk = e.target.closest('[data-pe-extracheck]');
-    if(!chk) return;
-    var id = chk.getAttribute('data-pe-extracheck');
-    if(chk.checked) peExtraSelected[id] = true; else delete peExtraSelected[id];
-    var cnt = Object.keys(peExtraSelected).filter(function(k){ return peExtraSelected[k]; }).length;
-    if($('chPeExtraSelCount')) $('chPeExtraSelCount').textContent = cnt;
-    chk.closest('.ch-mini-sw').classList.toggle('on', chk.checked);
   });
   document.getElementById('chPeExtras').addEventListener('click', function(e){
     var sw = e.target.closest('[data-pe-extrasw]');
