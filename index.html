@@ -8608,6 +8608,20 @@
     if(tail.trim()) out += (out ? '' : '') + escA(tail.trim()).replace(/\n/g,'<br>');
     return out || escA(text).replace(/\n/g,'<br>');
   }
+  /* мини-модалка для этого экрана (ИИ-помощник живёт в личном кабинете, а не в самом чате —
+     там нет доступа к модалке #chOverlay/#chModal, которая определена в другом блоке кода.
+     Переиспользуем уже существующий в разметке кабинета контейнер #detailOverlay/#detailModalBody,
+     просто рисуем в него свою шапку/тело/подвал. Закрывается через уже общий обработчик [data-close]. */
+  function assistModal(title, bodyHTML, footHTML){
+    var box = document.getElementById('detailModalBody');
+    if(!box) return null;
+    box.innerHTML =
+      '<div class="modal-head"><h3>' + escA(title) + '</h3><button class="x" data-close aria-label="Закрыть">✕</button></div>' +
+      '<div class="sub" style="max-height:60vh; overflow:auto;">' + bodyHTML + '</div>' +
+      (footHTML ? '<div class="modal-foot">' + footHTML + '</div>' : '');
+    openModal('detailOverlay');
+    return box;
+  }
   /* один обработчик на весь блок сообщений помощника — кнопки «Скопировать»/«Показать» рождаются
      динамически при каждом ответе, вешать слушатель на каждую по отдельности не нужно */
   cbBody.addEventListener('click', function(e){
@@ -8688,14 +8702,15 @@
       if(!apCode) return;
       var presets = (window.DRALAIT.MINE && window.DRALAIT.MINE.presets) || [];
       if(!presets.length){
-        modal('Добавить в пресет', '<p class="ch-hint" style="margin-top:0;">Пресетов пока нет — сначала создайте хотя бы один в личном кабинете.</p>', '<button class="ch-btn" data-chclose>Закрыть</button>');
+        assistModal('Добавить в пресет', '<p class="ch-hint" style="margin-top:0;">Пресетов пока нет — сначала создайте хотя бы один в личном кабинете.</p>', '<button class="btn" data-close>Закрыть</button>');
         return;
       }
       var abody = presets.slice().reverse().map(function(p, i){
-        return '<button type="button" class="ch-opt" data-acbtarget="' + i + '" style="text-align:left;"><b>' + escA(p.n || 'Без названия') + '</b></button>';
+        return '<button type="button" class="vc" data-acbtarget="' + i + '" style="text-align:left; width:100%; display:block;"><span class="name">' + escA(p.n || 'Без названия') + '</span></button>';
       }).join('');
       var alist = presets.slice().reverse();
-      var am = modal('В какой пресет добавить?', abody, '<button class="ch-btn" data-chclose>Отмена</button>');
+      var am = assistModal('В какой пресет добавить?', abody, '<button class="btn" data-close>Отмена</button>');
+      if(!am) return;
       am.querySelectorAll('[data-acbtarget]').forEach(function(btn){
         btn.addEventListener('click', function(){
           var preset = alist[+btn.getAttribute('data-acbtarget')];
@@ -8717,14 +8732,15 @@
       if(!arCode) return;
       var groups = (window.DRALAIT.REGEX_GROUPS || []);
       if(!groups.length){
-        modal('Добавить в Regex', '<p class="ch-hint" style="margin-top:0;">Групп Regex пока нет — сначала создайте хотя бы одну в настройках Regex.</p>', '<button class="ch-btn" data-chclose>Закрыть</button>');
+        assistModal('Добавить в Regex', '<p class="ch-hint" style="margin-top:0;">Групп Regex пока нет — сначала создайте хотя бы одну в настройках Regex.</p>', '<button class="btn" data-close>Закрыть</button>');
         return;
       }
       var rbody = groups.slice().reverse().map(function(g, i){
-        return '<button type="button" class="ch-opt" data-acbtarget="' + i + '" style="text-align:left;"><b>' + escA(g.label || 'Без названия') + '</b></button>';
+        return '<button type="button" class="vc" data-acbtarget="' + i + '" style="text-align:left; width:100%; display:block;"><span class="name">' + escA(g.label || 'Без названия') + '</span></button>';
       }).join('');
       var rlist = groups.slice().reverse();
-      var rm = modal('В какую группу Regex добавить?', rbody, '<button class="ch-btn" data-chclose>Отмена</button>');
+      var rm = assistModal('В какую группу Regex добавить?', rbody, '<button class="btn" data-close>Отмена</button>');
+      if(!rm) return;
       rm.querySelectorAll('[data-acbtarget]').forEach(function(btn){
         btn.addEventListener('click', function(){
           var group = rlist[+btn.getAttribute('data-acbtarget')];
@@ -9420,35 +9436,52 @@
     });
   }
   document.getElementById('vibeChatSkip').addEventListener('click', function(){
-    finalizeInstantStart('');
+    /* даже если пропустили обсуждение вайба, саму идею из поля «что нужно отыграть»
+       всё равно стоит сохранить в «Задумку сцены», а не терять её */
+    finalizeInstantStart(vibeOriginalIdea || '');
   });
+  /* запасной вариант, если модель недоступна/не ответила или прислала ответ не в ожидаемом
+     формате — то, что пользователь реально написал (идея + все его реплики в диалоге о вайбе),
+     ВСЕГДА должно попасть в «Задумку сцены» хотя бы сырым текстом, а не потеряться молча */
+  function localVibeFallback(){
+    var parts = [];
+    if(vibeOriginalIdea) parts.push(vibeOriginalIdea);
+    vibeMsgs.forEach(function(m){ if(m.role === 'user' && m.content) parts.push(m.content); });
+    return parts.join('\n').trim();
+  }
   document.getElementById('vibeChatGo').addEventListener('click', function(){
     var goBtn = this;
-    if(!vibeMsgs.length){ finalizeInstantStart(''); return; }
+    if(!vibeMsgs.length){ finalizeInstantStart(vibeOriginalIdea || ''); return; }
     var key = window.DRALAIT && window.DRALAIT.getActiveKey && window.DRALAIT.getActiveKey();
-    if(!key || !window.DRALAIT.callModel){ finalizeInstantStart(''); return; }
+    if(!key || !window.DRALAIT.callModel){ finalizeInstantStart(localVibeFallback()); return; }
     var transcript = vibeMsgs.map(function(m){ return (m.role === 'user' ? 'Игрок' : 'Помощник') + ': ' + m.content; }).join('\n');
     /* три части одним запросом: сама выжимка вайба + отдельно факты о персонаже + отдельно
        факты о персоне игрока — то, что пользователь явно назвал или подтвердил в разговоре,
-       чтобы потом не просто упомянуть их в задумке сцены текстом, а прямо занести в карточку */
-    var sys = 'Сожми первоначальную идею сцены и последующее обсуждение в три отдельные части. Не выдумывай ничего, чего не было явно сказано игроком или явно подтверждено им в ответ на предложение помощника — если ничего подходящего не прозвучало, соответствующая часть должна остаться пустой.\n\n' +
+       чтобы потом не просто упомянуть их в задумке сцены текстом, а прямо занести в карточку.
+       Учитываем и исходное поле «что нужно отыграть» (vibeOriginalIdea), и весь диалог ниже. */
+    var sys = 'Сожми первоначальную идею сцены (то, что игрок написал в поле «что нужно отыграть») и последующее обсуждение в три отдельные части. Не выдумывай ничего, чего не было явно сказано игроком или явно подтверждено им в ответ на предложение помощника — если ничего подходящего не прозвучало, соответствующая часть должна остаться пустой.\n\n' +
       'Ответь СТРОГО в этом формате, без ничего лишнего до или после:\n' +
-      '[DIGEST]\n(компактная выжимка вайба/атмосферы, упомянутых франшиз/лора/референсов и ключевых пожеланий — цельным текстом от третьего лица, без диалоговой формы)\n[/DIGEST]\n' +
+      '[DIGEST]\n(компактная выжимка вайба/атмосферы, упомянутых франшиз/лора/референсов и ключевых пожеланий — цельным текстом от третьего лица, без диалоговой формы; обязательно учти саму идею сцены, даже если больше ничего не обсуждалось)\n[/DIGEST]\n' +
       '[CHAR_FACTS]\n(конкретные факты именно о ПЕРСОНАЖЕ, которые явно прозвучали — внешность, имя, характер, прошлое, обстоятельства и т.п.; коротко, по пунктам через точку с запятой; пусто, если ничего такого не было)\n[/CHAR_FACTS]\n' +
       '[PERSONA_FACTS]\n(то же самое, но про ПЕРСОНУ игрока — как выглядит, кто он в этой истории; пусто, если ничего такого не было)\n[/PERSONA_FACTS]';
-    var msg = 'Первоначальная идея: ' + vibeOriginalIdea + '\n\nОбсуждение:\n' + transcript;
+    var msg = 'Первоначальная идея (поле «что нужно отыграть»): ' + vibeOriginalIdea + '\n\nОбсуждение:\n' + transcript;
     goBtn.disabled = true; var oldTxt = goBtn.textContent; goBtn.textContent = 'Собираю задумку…';
     window.DRALAIT.callModel({system: sys, messages:[{role:'user', content: msg}]}).then(function(res){
       goBtn.disabled = false; goBtn.textContent = oldTxt;
-      if(!res.ok){ finalizeInstantStart(''); return; }
+      /* модель не ответила — не теряем то, что пользователь уже написал, а сохраняем сырым текстом */
+      if(!res.ok){ finalizeInstantStart(localVibeFallback()); return; }
       function pluck(tag){
         var m = new RegExp('\\[' + tag + '\\]([\\s\\S]*?)\\[/' + tag + '\\]').exec(res.text);
         return m ? m[1].trim() : '';
       }
-      var digest = pluck('DIGEST') || res.text.trim();
+      var digest = pluck('DIGEST') || res.text.trim() || localVibeFallback();
       var charFacts = pluck('CHAR_FACTS');
       var personaFacts = pluck('PERSONA_FACTS');
       finalizeInstantStart(digest, charFacts, personaFacts);
+    }).catch(function(){
+      /* сеть/исключение — та же логика: не молчим и не теряем написанное */
+      goBtn.disabled = false; goBtn.textContent = oldTxt;
+      finalizeInstantStart(localVibeFallback());
     });
   });
 
@@ -9707,6 +9740,21 @@
         var ecode = d && d.error && (d.error.code || d.error.type);
         if(ecode === 'content_policy_violation') return {kind:'censorship', trigger:null};
         if(ecode === 'invalid_api_key' || ecode === 'incorrect_api_key') return {kind:'auth', trigger:null};
+        /* многие провайдеры (в частности OpenRouter и прокси) не присылают ни structured
+           finish_reason:"content_filter", ни узнаваемый ecode — а просто текст в d.error.message
+           вида "Request was blocked due to content policy." Раньше это падало в "unknown" без
+           единого слова о причине; теперь ищем по ключевым словам в самом тексте ошибки, чтобы
+           хотя бы верно определить ЧТО случилось (цензура/ключ/лимит), даже если провайдер
+           не назвал конкретную категорию/слово-триггер. */
+        var rawMsg = String((d && d.error && d.error.message) || (d && d.message) || '');
+        if(rawMsg){
+          if(/content[ _-]?polic|content[ _-]?filter|moderat|flagged|blocked[^.]*(polic|safety)|safety system|violat(e|es|ed)[^.]*(usage|content)[ _-]?polic|prohibited content|запрещ[её]нн|модерац|цензур/i.test(rawMsg)){
+            return {kind:'censorship', trigger:null};
+          }
+          if(/invalid[ _-]?api[ _-]?key|unauthorized|authentication[ _-]?fail|incorrect api key/i.test(rawMsg)) return {kind:'auth', trigger:null};
+          if(/rate[ _-]?limit|too many requests|quota/i.test(rawMsg)) return {kind:'rate_limit', trigger:null};
+          if(/overloaded|temporarily unavailable|try again later|server error|bad gateway/i.test(rawMsg)) return {kind:'provider_down', trigger:null};
+        }
       }catch(e){}
       return classifyHttpFallback(status);
     }
@@ -11782,6 +11830,20 @@
   #scr-chat .ch-typing i:nth-child(3){animation-delay:.36s;}
   @keyframes chDot{0%,60%,100%{opacity:.25; transform:translateY(0);} 30%{opacity:1; transform:translateY(-3px);}}
 
+  /* ---------- ошибка ответа модели — прямо в ленте чата, а не всплывающим поверх окном ---------- */
+  #scr-chat .ch-err-bub{
+    max-width:min(560px, 88%); margin:10px 0; padding:12px 14px;
+    border:1px solid rgba(201,90,90,.35); border-radius:14px;
+    background:rgba(120,32,32,.14);
+  }
+  #scr-chat .ch-err-title{font-size:13px; font-weight:700; color:#e2a6a6; margin-bottom:4px;}
+  #scr-chat .ch-err-hint{font-size:12.5px; color:var(--muted); line-height:1.5;}
+  #scr-chat .ch-err-trigger{font-size:12.5px; color:#e2c2a6; margin-top:6px; line-height:1.5;}
+  #scr-chat .ch-err-note{font-size:11.5px; color:var(--muted-2); margin-top:4px; line-height:1.5;}
+  #scr-chat .ch-err-raw{font-size:11px; color:var(--muted-2); margin-top:6px; opacity:.8; word-break:break-word;}
+  #scr-chat .ch-err-actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+  #scr-chat .ch-err-actions .ch-btn.ch-err-auto-on{background:var(--blood-dim); border-color:rgba(255,255,255,.2);}
+
   /* зелёная плашка «новая запись» */
   #scr-chat .ch-notice{
     position:absolute; top:14px; left:50%; transform:translate(-50%,-10px); z-index:7;
@@ -12051,22 +12113,23 @@
     #scr-chat .ch-bottom-inner{width:100%; max-width:none; margin:0; border-radius:18px; box-sizing:border-box;}
     #scr-chat .ch-searchbox{max-width:none;}
 
-    /* горячие клавиши (вложить/ООС/**/""/написать за меня/голос) — на телефоне не отдельной
-       строкой НАД полем ввода (туда неудобно тянуться большим пальцем), а справа от поля,
-       прямо над клавиатурой: колонка иконок рядом со строкой ввода, в зоне досягаемости руки. */
+    /* горячие клавиши (вложить/ООС/**/""/написать за меня/голос) — на телефоне НЕ отдельной
+       строкой над полем ввода (туда неудобно тянуться большим пальцем) и не сбоку от него,
+       а отдельной строкой ПОД строкой ввода и кнопкой отправки, прижатой к правому краю —
+       прямо над клавиатурой, в зоне досягаемости большого пальца. */
     #scr-chat .ch-bottom-inner{
       display:grid;
-      grid-template-columns:1fr auto;
-      grid-template-areas:"atts atts" "continue continue" "input tools";
-      align-items:end; column-gap:8px;
+      grid-template-columns:1fr;
+      grid-template-areas:"atts" "continue" "input" "tools";
+      align-items:end; row-gap:6px;
     }
     #scr-chat .ch-atts{grid-area:atts; margin-bottom:0;}
     #scr-chat .ch-continue-strip{grid-area:continue; margin-bottom:0;}
     #scr-chat .ch-inputrow{grid-area:input;}
     #scr-chat .ch-tools{
-      grid-area:tools; margin-bottom:0; align-self:stretch;
-      flex-direction:column; flex-wrap:wrap; gap:5px;
-      max-height:64px; align-content:flex-start;
+      grid-area:tools; margin-bottom:0;
+      flex-direction:row; flex-wrap:wrap; gap:6px;
+      justify-content:flex-end;
     }
     #scr-chat .ch-tool span.lbl{display:none;}
     #scr-chat .ch-tool{padding:0; width:32px; height:32px; justify-content:center; flex-shrink:0;}
@@ -15940,6 +16003,47 @@
      withSession — на время применения результата подставляет НУЖНУЮ сессию в S,
      даже если сейчас на экране открыта другая, и возвращает всё как было. ---------- */
   var pendingIds = {};
+  /* ---------- ошибка ответа модели: показывается прямо в ленте чата (не всплывающим окном),
+     с кнопкой «Повторить» и «Автоповторение» — последняя жмёт запрос снова и снова, пока не
+     придёт ответ или пока пользователь не остановит её той же кнопкой. Всё это — только
+     оперативная память вкладки, не сохраняется вместе с сессией. ---------- */
+  var autoRetryOn = {};       /* sid -> bool */
+  var autoRetryTimers = {};   /* sid -> setTimeout id */
+  var lastFailedRetryText = {}; /* sid -> textForFallback, чтобы «Повторить» знал что переслать */
+  function clearAutoRetry(sid){
+    autoRetryOn[sid] = false;
+    if(autoRetryTimers[sid]){ clearTimeout(autoRetryTimers[sid]); autoRetryTimers[sid] = null; }
+  }
+  function removeInlineError(sid){
+    document.querySelectorAll('#chFlow .ch-err-bub[data-sid="' + sid + '"]').forEach(function(n){ n.remove(); });
+  }
+  function inlineErrorHTML(sess, res){
+    var info = ERROR_KIND_INFO[res.errKind] || ERROR_KIND_INFO.unknown;
+    var autoOn = !!autoRetryOn[sess.id];
+    var noTriggerNote = (res.errKind === 'censorship' && !res.errTrigger)
+      ? '<div class="ch-err-note">Провайдер не прислал конкретное слово или категорию — определить точный триггер не получилось, но похоже это именно фильтр контента.</div>' : '';
+    return '<div class="ch-err-bub" id="chErrBub_' + sess.id + '" data-sid="' + sess.id + '">' +
+      '<div class="ch-err-title">⚠️ ' + esc(info.title) + '</div>' +
+      '<div class="ch-err-hint">' + esc(info.hint) + '</div>' +
+      (res.errTrigger ? '<div class="ch-err-trigger"><b>Похоже, сработало на:</b> ' + esc(res.errTrigger) + '</div>' : '') +
+      noTriggerNote +
+      (res.error ? '<div class="ch-err-raw">Сообщение провайдера: «' + esc(String(res.error).slice(0, 400)) + '»</div>' : '') +
+      '<div class="ch-err-actions">' +
+        '<button type="button" class="ch-btn" data-errretry="' + sess.id + '">Повторить</button>' +
+        '<button type="button" class="ch-btn' + (autoOn ? ' ch-err-auto-on' : '') + '" data-errauto="' + sess.id + '">' +
+          (autoOn ? 'Остановить автоповторение' : 'Автоповторение') +
+        '</button>' +
+      '</div>' +
+    '</div>';
+  }
+  function showInlineError(sess, res, textForFallback){
+    lastFailedRetryText[sess.id] = textForFallback;
+    removeInlineError(sess.id);
+    var flow = document.getElementById('chFlow');
+    if(!flow) return;
+    flow.insertAdjacentHTML('beforeend', inlineErrorHTML(sess, res));
+    if(S === sess) scrollDown();
+  }
   function withSession(sess, fn){
     var prevS = S, switched = (prevS !== sess);
     if(switched) S = sess;
@@ -16282,6 +16386,8 @@
       if(wasHere){ var tp = $('chTyping'); if(tp) tp.remove(); }
       var newMsg;
       if(res.ok){
+        clearAutoRetry(sess.id);
+        removeInlineError(sess.id);
         var minutesPassed = (res.state && typeof res.state.minutes_passed === 'number' && isFinite(res.state.minutes_passed) && res.state.minutes_passed > 0)
           ? Math.min(Math.round(res.state.minutes_passed), 60 * 24 * 60)
           : rnd(3, 16);
@@ -16300,8 +16406,19 @@
           S.diary.push({stamp:stampNow(), text:pick(DIARY[d] || DIARY.none), srcMsgId:newMsg.id});
         }
       } else {
-        if(res.error === 'no-key') notice('⚠️ Нет активного API-ключа — подключите его в настройках.');
-        else if(wasHere) showModelErrorModal(res);
+        if(res.error === 'no-key'){ clearAutoRetry(sess.id); notice('⚠️ Нет активного API-ключа — подключите его в настройках.'); }
+        else if(wasHere){
+          /* ошибка — прямо в ленте чата, не всплывающим окном; если включено автоповторение,
+             пробуем ещё раз сами через паузу, пока не придёт ответ или пока не остановят кнопкой */
+          showInlineError(sess, res, textForFallback);
+          if(autoRetryOn[sess.id]){
+            autoRetryTimers[sess.id] = setTimeout(function(){
+              if(!autoRetryOn[sess.id]) return;
+              if(pendingIds[sess.id]) return;
+              requestCharTurn(sess, textForFallback);
+            }, 3000);
+          }
+        }
         else notice('⚠️ Не получилось получить ответ' + (res.error ? (' (' + res.error + ')') : '') + '.');
       }
       if(newMsg){
@@ -16318,6 +16435,7 @@
   }
   function requestCharTurn(sess, textForFallback){
     pendingIds[sess.id] = true;
+    removeInlineError(sess.id);
 
     var flow = $('chFlow');
     flow.insertAdjacentHTML('beforeend',
@@ -16794,6 +16912,34 @@
     if(sld){
       S.sliders.items.splice(+sld.getAttribute('data-sliderdel'), 1);
       renderScene(); renderTokens(); return;
+    }
+    /* ошибка ответа модели, показанная прямо в ленте: «Повторить» — один раз, «Автоповторение» —
+       жмёт запрос снова и снова с паузой, пока не придёт ответ или пока не остановят той же кнопкой */
+    var errRetry = e.target.closest('[data-errretry]');
+    if(errRetry){
+      var ersid = errRetry.getAttribute('data-errretry');
+      var ersess = SESSIONS[ersid];
+      if(!ersess || pendingIds[ersid]) return;
+      clearAutoRetry(ersid);
+      removeInlineError(ersid);
+      requestCharTurn(ersess, lastFailedRetryText[ersid] || '');
+      return;
+    }
+    var errAuto = e.target.closest('[data-errauto]');
+    if(errAuto){
+      var easid = errAuto.getAttribute('data-errauto');
+      var easess = SESSIONS[easid];
+      if(!easess) return;
+      if(autoRetryOn[easid]){
+        /* уже крутится — эта же кнопка останавливает */
+        clearAutoRetry(easid);
+        removeInlineError(easid);
+      } else {
+        autoRetryOn[easid] = true;
+        removeInlineError(easid);
+        if(!pendingIds[easid]) requestCharTurn(easess, lastFailedRetryText[easid] || '');
+      }
+      return;
     }
     var sue = e.target.closest('[data-sumedit]');
     if(sue){ sumEntryModal(sue.getAttribute('data-sumedit')); return; }
@@ -18140,11 +18286,39 @@
     if(S && S.id === sid){ renderMeta(); renderSheet(); }
   };
 
+  /* предигровые факты (из диалога «Прежде чем начнём» и из самой идеи на странице «здесь и
+     сейчас») — раскладываем по конкретным категориям карточки персонажа/персоны ТЕМ ЖЕ
+     механизмом распознавания, что работает и по ходу самой игры (SHEET_SNIFF/PSHEET_SNIFF),
+     а не одним текстовым блоком. То, что не подошло ни под одну категорию (характер целиком,
+     предыстория, свободный пересказ и т.п.) — как и раньше, уходит в свободное описание.
+     «Задумка сцены» (S.vibeDigest) это никак не отменяет — это отдельное, параллельное поле. */
+  function bulkSniffIntoSheet(list, text, isPersona){
+    if(!text) return;
+    var guard = 0;
+    while(guard < 10){
+      var got = applySniff(list, text, isPersona, 'vibe-chat');
+      if(!got.length) break;
+      guard++;
+    }
+  }
   window.DRALAIT.goChat = function(seed){
     var st = newState(seed);
+    /* applySniff/get-/setSheetVal читают и пишут через глобальную S — на секунду подставляем
+       свежесозданную сессию, чтобы разбор ушёл именно в её карточку, а не в ту, что сейчас
+       открыта на экране; сразу же возвращаем как было (openSession чуть ниже сама выставит S). */
+    var prevS = S;
+    S = st;
+    try{
+      var charSource = [seed.idea || '', seed.vibeCharFacts || ''].filter(Boolean).join('\n');
+      bulkSniffIntoSheet(SHEET_SNIFF, charSource, false);
+      var personaSource = [seed.idea || '', seed.vibePersonaFacts || ''].filter(Boolean).join('\n');
+      bulkSniffIntoSheet(PSHEET_SNIFF, personaSource, true);
+    } finally {
+      S = prevS;
+    }
     /* факты о персонаже/персоне, подтверждённые ещё до старта в окне «Прежде чем начнём» —
-       сразу в карточку (полотно персонажа/персоны для этой сессии), а не только текстом
-       в общей задумке сцены */
+       то, что не разложилось по конкретным категориям выше, всё равно попадает в карточку —
+       свободным текстом в описание (полотно персонажа/персоны для этой сессии), а не теряется */
     if(seed.vibeCharFacts){
       st.sheet.descFree = (st.sheet.descFree ? st.sheet.descFree + '\n\n' : '') + seed.vibeCharFacts;
       st.sheet.descSrc = 'vibe-chat';
